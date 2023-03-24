@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		149089C229CE0C8300D64012 /* Countryball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149089C129CE0C8300D64012 /* Countryball.swift */; };
 		1497EDD129C0F01F008F78DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497EDD029C0F01F008F78DC /* AppDelegate.swift */; };
 		1497EDD329C0F01F008F78DC /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDD229C0F01F008F78DC /* GameScene.sks */; };
 		1497EDD729C0F01F008F78DC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497EDD629C0F01F008F78DC /* GameScene.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		149089C129CE0C8300D64012 /* Countryball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countryball.swift; sourceTree = "<group>"; };
 		1497EDCD29C0F01F008F78DC /* CountryballDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryballDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1497EDD029C0F01F008F78DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1497EDD229C0F01F008F78DC /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				1497EDD029C0F01F008F78DC /* AppDelegate.swift */,
 				1497EDD229C0F01F008F78DC /* GameScene.sks */,
 				1497EDD629C0F01F008F78DC /* GameScene.swift */,
+				149089C129CE0C8300D64012 /* Countryball.swift */,
 				1497EDD829C0F01F008F78DC /* GameViewController.swift */,
 				1497EDDA29C0F01F008F78DC /* Main.storyboard */,
 				1497EDDD29C0F022008F78DC /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 				1497EDD729C0F01F008F78DC /* GameScene.swift in Sources */,
 				1497EDD929C0F01F008F78DC /* GameViewController.swift in Sources */,
 				1497EDD129C0F01F008F78DC /* AppDelegate.swift in Sources */,
+				149089C229CE0C8300D64012 /* Countryball.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
