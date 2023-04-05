@@ -8,10 +8,21 @@
 import UIKit
 import SpriteKit
 
-class Countryball: SKSpriteNode {
-
-    func spawn() {
+class Countryball: SKNode {
+    var ballNode: SKSpriteNode!
+    var dropped = false
+    
+    func spawn(at position: CGPoint) {
+        self.position = position
         
+        ballNode = SKSpriteNode(imageNamed: cbName())
+        ballNode.position = CGPoint(x: 0, y: -50)
+        ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width)
+        ballNode.physicsBody!.isDynamic = false
+        //ballNode.name = "ready"
+      
+        
+        addChild(ballNode)
     }
     
     func cbName() -> String {

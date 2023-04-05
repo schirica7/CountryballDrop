@@ -33,11 +33,30 @@ class GameScene: SKScene {
         bottom.zPosition = 4
         bottom.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.055)
         addChild(bottom)
+        
+        spawnCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
+        //generateBall()
     }
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        //drop ball, change name
+        if let touch = touches.first {
+            let location = touch.location(in: self)
+            
+            for node in children {
+                if node.name == "ready" {
+                    print("ball ready")
+                    
+                    //ball.physicsBody!.isDynamic = false
+                    node.position = CGPoint(x: location.x, y: node.position.y)
+                    //node.physicsBody!.isDynamic = true
+                    //node.physicsBody!.restitution = 0.5
+                    node.name = "ball"
+                    //no
+                }
+            }
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -72,7 +91,7 @@ class GameScene: SKScene {
     }
     
     func destroyBall(ball: SKNode?, good: Bool) {
-        if good {
+        /*if good {
             if let fireParticles = SKEmitterNode(fileNamed: "Fireflies") {
                 if ball != nil {
                     fireParticles.position = ball!.position
@@ -88,15 +107,19 @@ class GameScene: SKScene {
                     addChild(fireParticles)
                 }
             }
-        }
+        }*/
         ball?.removeFromParent()
     }
     
-    func spawnCB() {
+    func spawnCB(at position: CGPoint) {
         let ball = Countryball()
-        ball.spawn()
+        ball.spawn(at: position)
+        //ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.frame.size.width/2)
+        //ball.physicsBody!.isDynamic = false
         addChild(ball)
-        //ball.
+        ball.name = "ready"
+        print(ball.physicsBody?.isDynamic)
+
     }
     
 }
