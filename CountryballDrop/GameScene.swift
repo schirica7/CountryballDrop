@@ -8,7 +8,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var label : SKLabelNode?
     var maxHeight = 0.0
@@ -23,6 +23,9 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         maxHeight = self.size.height * 0.8
         warningHeight = self.size.height * 0.7
+        
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        physicsWorld.contactDelegate = self
         
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         
@@ -50,9 +53,10 @@ class GameScene: SKScene {
                     
                     //ball.physicsBody!.isDynamic = false
                     node.position = CGPoint(x: location.x, y: node.position.y)
-                    //node.physicsBody!.isDynamic = true
-                    //node.physicsBody!.restitution = 0.5
+                    node.physicsBody!.isDynamic = true
+                    node.physicsBody!.restitution = 0.1
                     node.name = "ball"
+                    spawnCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
                     //no
                 }
             }
@@ -114,12 +118,12 @@ class GameScene: SKScene {
     func spawnCB(at position: CGPoint) {
         let ball = Countryball()
         ball.spawn(at: position)
-        //ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.frame.size.width/2)
-        //ball.physicsBody!.isDynamic = false
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.ballNode.texture!.size().width/2.0)
+        ball.physicsBody!.isDynamic = false
         addChild(ball)
         ball.name = "ready"
-        print(ball.physicsBody?.isDynamic)
-
+        //print(ball.physicsBody?.isDynamic)
+        //ball.ballNode.texture().
     }
     
 }

@@ -8,17 +8,19 @@
 import UIKit
 import SpriteKit
 
-class Countryball: SKNode {
+class Countryball: SKSpriteNode {
     var ballNode: SKSpriteNode!
     var dropped = false
     
     func spawn(at position: CGPoint) {
         self.position = position
         
-        ballNode = SKSpriteNode(imageNamed: cbName())
+        ballNode = SKSpriteNode(imageNamed: "vatican")
+        //ballNode.texture = SKTexture(imageNamed: "vatican")
+        //ballNode.size = ballNode.texture!.size()
         ballNode.position = CGPoint(x: 0, y: -50)
-        ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width)
-        ballNode.physicsBody!.isDynamic = false
+//        ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width/2.0)
+//        ballNode.physicsBody!.isDynamic = false
         //ballNode.name = "ready"
       
         
