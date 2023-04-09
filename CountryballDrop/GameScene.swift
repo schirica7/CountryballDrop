@@ -37,7 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bottom.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.055)
         addChild(bottom)
         
-        spawnCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
+        spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
         //generateBall()
     }
     
@@ -56,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     node.physicsBody!.isDynamic = true
                     node.physicsBody!.restitution = 0.1
                     node.name = "ball"
-                    spawnCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
+                    spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
                     //no
                 }
             }
@@ -115,15 +115,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball?.removeFromParent()
     }
     
-    func spawnCB(at position: CGPoint) {
+    func spawnTopCB(at position: CGPoint) {
         let ball = Countryball()
-        ball.spawn(at: position)
-        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.ballNode.texture!.size().width/2.0)
+        ball.spawn(at: position, named: ball.newCbName())
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(ball.ballSize)/2.0)
         ball.physicsBody!.isDynamic = false
         addChild(ball)
         ball.name = "ready"
         //print(ball.physicsBody?.isDynamic)
         //ball.ballNode.texture().
+    }
+    
+    func combineCB(at position: CGPoint) {
+        
     }
     
 }

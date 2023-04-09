@@ -11,23 +11,24 @@ import SpriteKit
 class Countryball: SKSpriteNode {
     var ballNode: SKSpriteNode!
     var dropped = false
+    var ballName = ""
+    var ballSize = 0
     
-    func spawn(at position: CGPoint) {
+    let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
+        "poland", "germany", "ukraine", "russia", "world"]
+    
+    func spawn(at position: CGPoint, named name: String) {
         self.position = position
+        //var name = cbName()
         
-        ballNode = SKSpriteNode(imageNamed: "vatican")
-        //ballNode.texture = SKTexture(imageNamed: "vatican")
-        //ballNode.size = ballNode.texture!.size()
+        ballNode = SKSpriteNode(imageNamed: name)
         ballNode.position = CGPoint(x: 0, y: -50)
-//        ballNode.physicsBody = SKPhysicsBody(circleOfRadius: ballNode.size.width/2.0)
-//        ballNode.physicsBody!.isDynamic = false
-        //ballNode.name = "ready"
-      
+        setCbSize(name: name)
         
         addChild(ballNode)
     }
     
-    func cbName() -> String {
+    func newCbName() -> String {
         let number = Double.random(in: 0...1)
         var name = ""
         
@@ -41,6 +42,36 @@ class Countryball: SKSpriteNode {
             name = "vatican"
         }
         
+        ballName = name
         return name
+    }
+    
+    func setCbSize(name: String) {
+        switch ballName {
+            
+        case "vatican":
+            ballSize = 40
+        case "luxembourg":
+            ballSize = 80
+        case "netherlands":
+            ballSize = 120
+        case "ireland":
+            ballSize = 160
+        case "uk":
+            ballSize = 200
+        case "poland":
+            ballSize = 240
+        case "germany":
+            ballSize = 280
+        case "ukraine":
+            ballSize = 320
+        case "russia":
+            ballSize = 360
+        case "world":
+            ballSize = 400
+        default:
+            break
+            
+        }
     }
 }
