@@ -33,11 +33,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bottom = SKSpriteNode(color: UIColor(red: 255/255, green: 210/255, blue: 79/255, alpha: 1), size: rectSize)
         bottom.physicsBody = SKPhysicsBody(rectangleOf: rectSize)
         bottom.physicsBody!.isDynamic = false
-        bottom.zPosition = 4
+        //bottom.physicsBody!.contactTestBitMask = bottom.physicsBody!.collisionBitMask
+        bottom.zPosition = -1
         bottom.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.055)
         addChild(bottom)
         
-        spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
+        spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.8))
         //generateBall()
     }
     
@@ -54,9 +55,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //ball.physicsBody!.isDynamic = false
                     node.position = CGPoint(x: location.x, y: node.position.y)
                     node.physicsBody!.isDynamic = true
-                    node.physicsBody!.restitution = 0.1
+                    node.physicsBody!.restitution = 0.01
                     node.name = "ball"
                     spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * 0.9))
+                    //print(node.)
                     //no
                 }
             }
@@ -118,10 +120,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func spawnTopCB(at position: CGPoint) {
         let ball = Countryball()
         ball.spawn(at: position, named: ball.newCbName())
-        ball.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(ball.ballSize)/2.0)
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(ball.ballSize/2))
         ball.physicsBody!.isDynamic = false
+        ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         addChild(ball)
         ball.name = "ready"
+        print(ball.ballSize)
         //print(ball.physicsBody?.isDynamic)
         //ball.ballNode.texture().
     }

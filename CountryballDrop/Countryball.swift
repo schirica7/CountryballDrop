@@ -22,7 +22,7 @@ class Countryball: SKSpriteNode {
         //var name = cbName()
         
         ballNode = SKSpriteNode(imageNamed: name)
-        ballNode.position = CGPoint(x: 0, y: -50)
+        //ballNode.position = CGPoint(x: 0, y: -50)
         setCbSize(name: name)
         
         addChild(ballNode)
