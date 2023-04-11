@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "ireland@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "ireland@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
