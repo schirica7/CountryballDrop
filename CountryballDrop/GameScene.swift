@@ -60,6 +60,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         warning = SKSpriteNode(color: UIColor(red: 1, green: 0, blue: 0, alpha: 1), size: warningSize)
         warning.zPosition = -1
         warning.position = CGPoint(x: self.size.width/2, y: self.size.height * warningHeight)
+       // warning.physicsBody = SKPhysicsBody(rectangleOf: warningSize)
+       // warning.physicsBody!.isDynamic = false
         warning.isHidden = true
         warning.name = "warning"
         addChild(warning)
@@ -68,7 +70,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         max = SKSpriteNode(color: UIColor(red: 0, green: 1, blue: 0, alpha: 1), size: warningSize)
         max.zPosition = -1
         max.position = CGPoint(x: self.size.width/2, y: self.size.height * maxHeight)
-        max.isHidden = true
+        //max.physicsBody = SKPhysicsBody(rectangleOf: warningSize)
+       // max.physicsBody!.isDynamic = false
+        max.isHidden = false
         max.name = "max"
         addChild(max)
         
@@ -84,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             for node in children {
                 if node.name == "ready" {
-                    print("ball ready")
+                    //print("ball ready")
                     let cb = node as! Countryball
                     
                     //ball.physicsBody!.isDynamic = false
@@ -93,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //cb.dropped = true
                     cb.physicsBody!.restitution = 0.01
                     cb.name = "ball"
+                    print(cb.name!)
                     spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
                     //return
                     //print(node.)
@@ -107,84 +112,79 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        /*if (contact.bodyA.node?.name == "ball") {
-         collisionBetween(ball: contact.bodyA.node, object: contact.bodyB.node)
-         } else if (contact.bodyB.node?.name == "ball") {
-         collisionBetween(ball: contact.bodyB.node, object: contact.bodyA.node)
-         }*/
-        
-        if contact.bodyA.node?.name == "ready" && (contact.bodyB.node?.name == "max") {
-            let cb = contact.bodyA.node as! Countryball
+        //TODO: Warning/max
+        if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
+            let cb = contact.bodyA.node! as! Countryball
             cb.dropped = true
-            contact.bodyA.node?.name = "ball"
-        } else if contact.bodyA.node?.name == "max" && (contact.bodyB.node?.name == "ready") {
-            let cb = contact.bodyB.node as! Countryball
+            print(cb.dropped)
+            
+            if contact.bodyB.node?.name == "ball" {
+                let cb1 = contact.bodyB.node! as! Countryball
+                cb1.dropped = true
+                collisionBetween(cb: cb, object: contact.bodyB.node!)
+            }
+            //print
+            //contact.bodyA.node?.name = "ball"
+        } else if (contact.bodyA.node?.name == "bottom" || contact.bodyA.node?.name == "ball") && contact.bodyB.node?.name == "ball" {
+            let cb = contact.bodyB.node! as! Countryball
             cb.dropped = true
-            contact.bodyB.node?.name = "ball"
-        }
-        
-        
-        if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "max" || contact.bodyB.node?.name == "warning") {
-            collisionBetween(cb: (contact.bodyA.node as! Countryball), object: contact.bodyB.node)
-        } else if (contact.bodyA.node?.name == "max" || contact.bodyA.node?.name == "warning") && contact.bodyB.node?.name == "ball" {
-            //contact.bodyB.node!.
-            collisionBetween(cb: (contact.bodyB.node as! Countryball), object: contact.bodyA.node)
+            print(cb.dropped)
+            
+            if contact.bodyA.node?.name == "ball" {
+                let cb1 = contact.bodyA.node! as! Countryball
+                cb1.dropped = true
+                collisionBetween(cb: cb, object: contact.bodyA.node!)
+            }
+            //contact.bodyB.node?.name = "ball"
         }
         
     }
     
     func collisionBetween(cb: Countryball?, object: SKNode?) {
-        print(object?.name)
+        //print(object?.name)
+        if object?.name == "ball" && cb?.name == "ball" {
+            print("inside here")
+            let cb2 = object as! Countryball
+            
+            if (cb!.ballName == cb2.ballName) {
+                print("Balls combining: \(cb2.ballName)")
+                let newX = (cb!.position.x + cb2.position.x)/2.0
+                let newY = (cb!.position.y + cb2.position.y)/2.0
+                combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
+            }
+        }
     }
     
-    func collisionBetween(cb1: Countryball?, cb2: Countryball?) {
+    func combineCB(cb1: Countryball, cb2: Countryball, at position: CGPoint) {
+        print("inside")
+        var newCBName = ""
         
-        /*if (cb1?.name == cb2?.name) && (cb1?.name != "ball" && cb2?.name != "ball"){
-         //combineCB(at: <#T##CGPoint#>)
-         } else {*/
-        if cb1?.ballName == cb2?.ballName {
-            cb1!.name = cb1!.ballName
-            print(cb1!.name!)
+        for (index, name) in names.enumerated() {
+            if name == cb1.ballName && name == cb2.ballName {
+                //print("Result: \(name)")
+                newCBName = names[index + 1]
+                
+                destroyBall(ball: cb1)
+                destroyBall(ball: cb2)
+                
+                let newBall = Countryball()
+                newBall.spawn(at: position, named: newCBName)
+                newBall.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(newBall.ballSize)/2.0)
+                newBall.physicsBody!.isDynamic = true
+                newBall.physicsBody!.contactTestBitMask = newBall.physicsBody!.collisionBitMask
+                addChild(newBall)
+                newBall.name = "ball"
+                newBall.dropped = true
+                
+                print("Result: \(newCBName)")
+                break
+            }
         }
-        //}
-        /*if object?.name == "good" {
-         //get point
-         //destroy ball
-         destroyBall(ball: ball, good: true)
-         score += 1
-         ballLimit += 1
-         } else if object?.name == "bad" {
-         destroyBall(ball: ball, good: false)
-         if ballLimit > 0 {
-         score -= 1
-         ballLimit -= 1
-         }
-         
-         
-         //lose point?
-         } else if object?.name == "box" {
-         object!.removeFromParent()
-         }*/
+        
+        
     }
     
     func destroyBall(ball: SKNode?) {
-        /*if good {
-         if let fireParticles = SKEmitterNode(fileNamed: "Fireflies") {
-         if ball != nil {
-         fireParticles.position = ball!.position
-         fireParticles.name = "fireParticles"
-         addChild(fireParticles)
-         }
-         }
-         } else {
-         if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
-         if ball != nil {
-         fireParticles.position = ball!.position
-         fireParticles.name = "fireParticles"
-         addChild(fireParticles)
-         }
-         }
-         }*/
         ball?.removeFromParent()
     }
     
@@ -196,15 +196,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         addChild(ball)
         ball.name = "ready"
-        balls.append(ball)
+        //balls.append(ball)
         //print(ball.ballSize)
         //print(ball.physicsBody?.isDynamic)
         //ball.ballNode.texture().
     }
     
-    func combineCB(at position: CGPoint) {
-        
-    }
     
     func spawnMenu() {
         
