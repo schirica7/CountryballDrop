@@ -8,15 +8,17 @@
 import SpriteKit
 import GameplayKit
 
-/*TODO: Collisions
+/*
  TODO: Menu button - music, restart, exit
- TODO: Animations?
  TODO: Red line, touching red line = loses, red line @0.85 height
  TODO: Red line appears when you reach certain point @0.75 height
  TODO: Music
  TODO: Intro & Outro Scene With Graphics
  TODO: If you have a world, you win
  TODO: Timer
+ TODO: Emitter cell when combine
+ 
+I actually made a game though
  */
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -95,10 +97,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.position = CGPoint(x: location.x, y: node.position.y)
                     cb.physicsBody!.isDynamic = true
                     //cb.dropped = true
-                    cb.physicsBody!.restitution = 0.01
+                    cb.physicsBody!.restitution = 0.001
                     cb.name = "ball"
                     print(cb.name!)
-                    spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        [unowned self] in
+                        self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
+                    }
+                    
                     //return
                     //print(node.)
                     //no
@@ -134,6 +141,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let cb1 = contact.bodyA.node! as! Countryball
                 cb1.dropped = true
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
+            } else {
+                //TODO: Random left/right direction
+                let velocity = CGVector(dx: cb.physicsBody!.mass/1.05, dy: cb.physicsBody!.mass/1.05)
+                cb.run(SKAction.applyForce(velocity, duration: 1))
             }
             //contact.bodyB.node?.name = "ball"
         }
@@ -146,10 +157,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("inside here")
             let cb2 = object as! Countryball
             
-            if (cb!.ballName == cb2.ballName) {
+            if (cb!.ballName == cb2.ballName && cb2.ballName != "world") {
                 print("Balls combining: \(cb2.ballName)")
                 let newX = (cb!.position.x + cb2.position.x)/2.0
                 let newY = (cb!.position.y + cb2.position.y)/2.0
+                
+                /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    [unowned self] in
+                    self.combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
+                }*/
                 combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
             }
         }
@@ -163,6 +179,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if name == cb1.ballName && name == cb2.ballName {
                 //print("Result: \(name)")
                 newCBName = names[index + 1]
+                //let v1 = cb1.physicsBody?.
+                //let v2 = cb2.physicsBody?.velocity
+                //TODO: Random left/right direction
+                let velocity = CGVector(dx: 1, dy: 1)
+                
                 
                 destroyBall(ball: cb1)
                 destroyBall(ball: cb2)
@@ -174,7 +195,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBall.physicsBody!.contactTestBitMask = newBall.physicsBody!.collisionBitMask
                 addChild(newBall)
                 newBall.name = "ball"
+                newBall.run(SKAction.applyForce(velocity, duration: 1))
+                
                 newBall.dropped = true
+                
+                /*if newCBName == "world" {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        [unowned self] in
+                        //TODO: New Scene
+                        let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                        
+                        let transition = SKTransition.crossFade(withDuration: 1)
+                        self.view?.presentScene(scene, transition: transition)
+                    }
+                }*/
                 
                 print("Result: \(newCBName)")
                 break
@@ -196,17 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         addChild(ball)
         ball.name = "ready"
-        //balls.append(ball)
-        //print(ball.ballSize)
-        //print(ball.physicsBody?.isDynamic)
-        //ball.ballNode.texture().
     }
-    
-    
-    func spawnMenu() {
-        
-    }
-    
 }
 
 

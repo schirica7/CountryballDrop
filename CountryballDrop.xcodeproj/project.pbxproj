@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		147B0A3629E7260700C62ECF /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B0A3529E7260700C62ECF /* EndScene.swift */; };
+		147B0A3829E7261B00C62ECF /* EndScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147B0A3729E7261B00C62ECF /* EndScene.sks */; };
 		149089C229CE0C8300D64012 /* Countryball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149089C129CE0C8300D64012 /* Countryball.swift */; };
 		1497EDD129C0F01F008F78DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497EDD029C0F01F008F78DC /* AppDelegate.swift */; };
 		1497EDD329C0F01F008F78DC /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDD229C0F01F008F78DC /* GameScene.sks */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		147B0A3529E7260700C62ECF /* EndScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
+		147B0A3729E7261B00C62ECF /* EndScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EndScene.sks; sourceTree = "<group>"; };
 		149089C129CE0C8300D64012 /* Countryball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countryball.swift; sourceTree = "<group>"; };
 		1497EDCD29C0F01F008F78DC /* CountryballDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryballDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1497EDD029C0F01F008F78DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +66,8 @@
 				1497EDD029C0F01F008F78DC /* AppDelegate.swift */,
 				1497EDD229C0F01F008F78DC /* GameScene.sks */,
 				1497EDD629C0F01F008F78DC /* GameScene.swift */,
+				147B0A3729E7261B00C62ECF /* EndScene.sks */,
+				147B0A3529E7260700C62ECF /* EndScene.swift */,
 				149089C129CE0C8300D64012 /* Countryball.swift */,
 				1497EDD829C0F01F008F78DC /* GameViewController.swift */,
 				1497EDDA29C0F01F008F78DC /* Main.storyboard */,
@@ -133,6 +139,7 @@
 				1497EDD329C0F01F008F78DC /* GameScene.sks in Resources */,
 				1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */,
 				1497EDE129C0F022008F78DC /* LaunchScreen.storyboard in Resources */,
+				147B0A3829E7261B00C62ECF /* EndScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +154,7 @@
 				1497EDD929C0F01F008F78DC /* GameViewController.swift in Sources */,
 				1497EDD129C0F01F008F78DC /* AppDelegate.swift in Sources */,
 				149089C229CE0C8300D64012 /* Countryball.swift in Sources */,
+				147B0A3629E7260700C62ECF /* EndScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +308,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -327,6 +336,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
