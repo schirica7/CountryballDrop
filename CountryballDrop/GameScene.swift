@@ -101,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.name = "ball"
                     print(cb.name!)
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
                         [unowned self] in
                         self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
                     }
@@ -129,6 +129,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let cb1 = contact.bodyB.node! as! Countryball
                 cb1.dropped = true
                 collisionBetween(cb: cb, object: contact.bodyB.node!)
+            } else {
+                let velocity = CGVector(dx: cb.physicsBody!.mass * 2 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 2)
+                cb.run(SKAction.applyForce(velocity, duration: 1))
             }
             //print
             //contact.bodyA.node?.name = "ball"
@@ -143,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
                 //TODO: Random left/right direction
-                let velocity = CGVector(dx: cb.physicsBody!.mass/1.05, dy: cb.physicsBody!.mass/1.05)
+                let velocity = CGVector(dx: cb.physicsBody!.mass * 2 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 2)
                 cb.run(SKAction.applyForce(velocity, duration: 1))
             }
             //contact.bodyB.node?.name = "ball"
@@ -182,7 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //let v1 = cb1.physicsBody?.
                 //let v2 = cb2.physicsBody?.velocity
                 //TODO: Random left/right direction
-                let velocity = CGVector(dx: 1, dy: 1)
+                
                 
                 
                 destroyBall(ball: cb1)
@@ -195,6 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBall.physicsBody!.contactTestBitMask = newBall.physicsBody!.collisionBitMask
                 addChild(newBall)
                 newBall.name = "ball"
+                let velocity = CGVector(dx: newBall.physicsBody!.mass * 2 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 2)
                 newBall.run(SKAction.applyForce(velocity, duration: 1))
                 
                 newBall.dropped = true
@@ -230,6 +234,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         addChild(ball)
         ball.name = "ready"
+    }
+    
+    func leftOrRight() -> Int {
+        let right = Bool.random()
+        var direction = 0
+        
+        if !right {
+            direction = -1
+        } else {
+            direction = 1
+        }
+        
+        return direction
     }
 }
 
