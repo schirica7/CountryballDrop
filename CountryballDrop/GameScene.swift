@@ -32,7 +32,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
                  "poland", "germany", "ukraine", "russia", "world"]
     var inMenu = false
-    
+    var backgroundMusic: SKAudioNode!
+    var muteButton: SKSpriteNode!
+    var muted = false
     var max: SKNode!
     var warning: SKNode!
     //To lose: if the ball's y + ball.height/2 >= max height
@@ -80,6 +82,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
         //generateBall()
+        
+        muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
+        muteButton.position = CGPoint(x: 42, y: 42)
+        muteButton.zPosition = 2
+        addChild(muteButton)
+        
+        if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
+            backgroundMusic = SKAudioNode(url: musicLocation)
+            backgroundMusic.autoplayLooped = true
+            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+            addChild(backgroundMusic)
+            backgroundMusic.run(SKAction.play())
+        }
     }
     
     
@@ -87,6 +102,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //drop ball, change name
         if let touch = touches.first {
             let location = touch.location(in: self)
+            
+            let objects = nodes(at: location)
+            if objects.contains (muteButton) {
+                muted = !muted
+                if muted {
+                    muteButton.texture = SKTexture(imageNamed: "muteMusic")
+                    backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                } else {
+                    muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                    backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                }
+            }
             
             for node in children {
                 if node.name == "ready" {

@@ -17,6 +17,7 @@
 		1497EDDC29C0F01F008F78DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDA29C0F01F008F78DC /* Main.storyboard */; };
 		1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDD29C0F022008F78DC /* Assets.xcassets */; };
 		1497EDE129C0F022008F78DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDF29C0F022008F78DC /* LaunchScreen.storyboard */; };
+		CA9EE82929E876CA00F91B89 /* kazooMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		1497EDDB29C0F01F008F78DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1497EDDD29C0F022008F78DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1497EDE029C0F022008F78DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kazooMusic.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				1497EDDA29C0F01F008F78DC /* Main.storyboard */,
 				1497EDDD29C0F022008F78DC /* Assets.xcassets */,
 				1497EDDF29C0F022008F78DC /* LaunchScreen.storyboard */,
+				CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */,
 			);
 			path = CountryballDrop;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 				1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */,
 				1497EDE129C0F022008F78DC /* LaunchScreen.storyboard in Resources */,
 				147B0A3829E7261B00C62ECF /* EndScene.sks in Resources */,
+				CA9EE82929E876CA00F91B89 /* kazooMusic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
