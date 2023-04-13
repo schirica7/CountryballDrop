@@ -113,6 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
                     backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
                 }
+                return
             }
             
             for node in children {
