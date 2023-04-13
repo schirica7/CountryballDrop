@@ -29,9 +29,6 @@ class Countryball: SKSpriteNode {
         ballNode = SKSpriteNode(imageNamed: name)
         ballSize = ballNode.size.width
         ballName = name
-        //ballNode.texture = SKTexture(imageNamed: name)
-        //ballNode.position = CGPoint(x: 0, y: -50)
-        //setCbSize(name: name)
         
         addChild(ballNode)
     }
