@@ -125,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.position = CGPoint(x: location.x, y: node.position.y)
                     cb.physicsBody!.isDynamic = true
                     //cb.dropped = true
-                    cb.physicsBody!.restitution = 0.001
+                    cb.physicsBody!.restitution = 0.005
                     cb.name = "ball"
                     print(cb.name!)
                     
@@ -158,7 +158,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 cb1.dropped = true
                 collisionBetween(cb: cb, object: contact.bodyB.node!)
             } else {
-                let velocity = CGVector(dx: cb.physicsBody!.mass * 2 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 2)
+                let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
                 cb.run(SKAction.applyForce(velocity, duration: 1))
             }
             //print
@@ -174,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
                 //TODO: Random left/right direction
-                let velocity = CGVector(dx: cb.physicsBody!.mass * 2 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 2)
+                let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
                 cb.run(SKAction.applyForce(velocity, duration: 1))
             }
             //contact.bodyB.node?.name = "ball"
@@ -226,21 +226,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBall.physicsBody!.contactTestBitMask = newBall.physicsBody!.collisionBitMask
                 addChild(newBall)
                 newBall.name = "ball"
-                let velocity = CGVector(dx: newBall.physicsBody!.mass * 2 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 2)
+                let velocity = CGVector(dx: newBall.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 1.5)
                 newBall.run(SKAction.applyForce(velocity, duration: 1))
                 
                 newBall.dropped = true
                 
-                /*if newCBName == "world" {
+                if newCBName == "world" {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         [unowned self] in
                         //TODO: New Scene
                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                        scene.win = true
                         
                         let transition = SKTransition.crossFade(withDuration: 1)
                         self.view?.presentScene(scene, transition: transition)
                     }
-                }*/
+                }
                 
                 print("Result: \(newCBName)")
                 break
