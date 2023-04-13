@@ -84,7 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //generateBall()
         
         muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
-        muteButton.position = CGPoint(x: 42, y: 42)
+        muteButton.position = CGPoint(x: 50, y: 50)
         muteButton.zPosition = 2
         addChild(muteButton)
         
