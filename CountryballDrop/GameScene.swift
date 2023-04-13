@@ -126,13 +126,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.physicsBody!.isDynamic = true
                     //cb.dropped = true
                     cb.physicsBody!.restitution = 0.005
+                    node.name = "ball"
                     cb.name = "ball"
-                    print(cb.name!)
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                        [unowned self] in
+                    //DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                        //[unowned self] in
                         self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
-                    }
+                    //}
                     
                     //return
                     //print(node.)
@@ -180,6 +180,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //contact.bodyB.node?.name = "ball"
         }
         
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        //TODO: Update doesn't work
+        for node in children {
+            if node.name == "ball" {
+                if node.intersects(max) {
+                    print("You lost")
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        [unowned self] in
+                        //TODO: New Scene
+                        let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                        scene.win = false
+                        
+                        let transition = SKTransition.crossFade(withDuration: 1)
+                        self.view?.presentScene(scene, transition: transition)
+                    }
+                }
+                return
+            }
+        }
     }
     
     func collisionBetween(cb: Countryball?, object: SKNode?) {
@@ -231,7 +252,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 newBall.dropped = true
                 
-                if newCBName == "world" {
+                if newCBName == "world" && !newBall.intersects(max){
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         [unowned self] in
                         //TODO: New Scene
