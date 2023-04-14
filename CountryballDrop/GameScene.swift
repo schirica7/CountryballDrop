@@ -25,6 +25,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var label : SKLabelNode?
     
+    var timerLabel = SKLabelNode(text: "Time: 0")
+    var minutes = 0
+    var hours = 0
+        var counter = 0 {
+            didSet {
+                if counter >= 60 {
+                    minutes += 1
+                    counter = 0
+                    if minutes >= 60 {
+                        hours += 1
+                        minutes = 0
+                    }
+                }
+                self.timerLabel.text = String(format: "Time: %02d:%02d:%02d", hours, minutes, counter)
+            }
+        }
+    
+    var tim = Timer()
     var balls = [Countryball]()
     var spawnHeight = 0.87
     var maxHeight = 0.8
@@ -39,6 +57,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var warning: SKNode!
     //To lose: if the ball's y + ball.height/2 >= max height
     //Warning: if the ball's y + ball.height/2 >= warning height
+    
+    func count() {
+        counter += 1
+    }
     
     override func didMove(to view: SKView) {
         //        maxHeight = self.size.height * 0.8
@@ -95,6 +117,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(backgroundMusic)
             backgroundMusic.run(SKAction.play())
         }
+        
+        timerLabel = SKLabelNode(fontNamed: "Dosis")
+        timerLabel.text = "Score: 0"
+        timerLabel.horizontalAlignmentMode = .left
+        timerLabel.position = CGPoint(x: self.size.width * 0.03, y: self.size.height * 0.87)
+        self.timerLabel.fontSize = 20
+        self.addChild(timerLabel)
+        
+        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(count), SKAction.wait(forDuration: 1)])))
     }
     
     
@@ -277,6 +308,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         return direction
     }
+    
+//    override func update(_ currentTime: TimeInterval) {
+//    }
 }
 
 
