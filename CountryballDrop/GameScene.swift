@@ -20,6 +20,9 @@ import GameplayKit
  
 I actually made a game though
  */
+enum Saved {
+    static let darkMode = "com.kayshov.chirica.countryballdrop.dark"
+}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -42,7 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     
-    var tim = Timer()
+    let saved = UserDefaults(suiteName: "com.kayshov.countryballdrop.chirica")
     var balls = [Countryball]()
     var spawnHeight = 0.87
     var maxHeight = 0.8
@@ -160,10 +163,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     node.name = "ball"
                     cb.name = "ball"
                     
-                    //DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                        //[unowned self] in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                        [unowned self] in
                         self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
-                    //}
+                    }
                     
                     //return
                     //print(node.)
@@ -192,6 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
                 cb.run(SKAction.applyForce(velocity, duration: 1))
             }
+            //balls.append(cb)
             //print
             //contact.bodyA.node?.name = "ball"
         } else if (contact.bodyA.node?.name == "bottom" || contact.bodyA.node?.name == "ball") && contact.bodyB.node?.name == "ball" {
@@ -208,6 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
                 cb.run(SKAction.applyForce(velocity, duration: 1))
             }
+            //balls.append(cb)
             //contact.bodyB.node?.name = "ball"
         }
         
@@ -266,10 +271,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //let v2 = cb2.physicsBody?.velocity
                 //TODO: Random left/right direction
                 
+                /*for ball in balls {
                 
-                
+                }*/
+                //balls.remove(at: <#T##Int#>)
                 destroyBall(ball: cb1)
                 destroyBall(ball: cb2)
+
                 
                 let newBall = Countryball()
                 newBall.spawn(at: position, named: newCBName)
@@ -278,6 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBall.physicsBody!.contactTestBitMask = newBall.physicsBody!.collisionBitMask
                 addChild(newBall)
                 newBall.name = "ball"
+                //balls.append(newBall)
                 let velocity = CGVector(dx: newBall.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 1.5)
                 newBall.run(SKAction.applyForce(velocity, duration: 1))
                 
