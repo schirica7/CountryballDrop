@@ -12,10 +12,10 @@ import GameplayKit
  TODO: Menu button - music, restart, exit
  TODO: Red line, touching red line = loses, red line @0.85 height
  TODO: Red line appears when you reach certain point @0.75 height
- TODO: Music
- TODO: Intro & Outro Scene With Graphics
- TODO: If you have a world, you win
- TODO: Timer
+ TODO: Music✅
+ TODO: Intro & Outro Scene With Graphics 
+ TODO: If you have a world, you win - 1/2
+ TODO: Timer ✅
  TODO: Emitter cell when combine
  
 I actually made a game though

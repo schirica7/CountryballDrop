@@ -17,6 +17,8 @@
 		1497EDDC29C0F01F008F78DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDA29C0F01F008F78DC /* Main.storyboard */; };
 		1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDD29C0F022008F78DC /* Assets.xcassets */; };
 		1497EDE129C0F022008F78DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDF29C0F022008F78DC /* LaunchScreen.storyboard */; };
+		CA43227329E9CAC600B178E1 /* WelcomeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = CA43227229E9CAC600B178E1 /* WelcomeScene.sks */; };
+		CA43227729E9CB4600B178E1 /* WelcomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA43227629E9CB4600B178E1 /* WelcomeScene.swift */; };
 		CA9EE82929E876CA00F91B89 /* kazooMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +34,8 @@
 		1497EDDB29C0F01F008F78DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1497EDDD29C0F022008F78DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1497EDE029C0F022008F78DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CA43227229E9CAC600B178E1 /* WelcomeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WelcomeScene.sks; sourceTree = "<group>"; };
+		CA43227629E9CB4600B178E1 /* WelcomeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScene.swift; sourceTree = "<group>"; };
 		CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kazooMusic.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +72,8 @@
 				1497EDD029C0F01F008F78DC /* AppDelegate.swift */,
 				1497EDD229C0F01F008F78DC /* GameScene.sks */,
 				1497EDD629C0F01F008F78DC /* GameScene.swift */,
+				CA43227229E9CAC600B178E1 /* WelcomeScene.sks */,
+				CA43227629E9CB4600B178E1 /* WelcomeScene.swift */,
 				147B0A3729E7261B00C62ECF /* EndScene.sks */,
 				147B0A3529E7260700C62ECF /* EndScene.swift */,
 				149089C129CE0C8300D64012 /* Countryball.swift */,
@@ -143,6 +149,7 @@
 				1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */,
 				1497EDE129C0F022008F78DC /* LaunchScreen.storyboard in Resources */,
 				147B0A3829E7261B00C62ECF /* EndScene.sks in Resources */,
+				CA43227329E9CAC600B178E1 /* WelcomeScene.sks in Resources */,
 				CA9EE82929E876CA00F91B89 /* kazooMusic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,6 +164,7 @@
 				1497EDD729C0F01F008F78DC /* GameScene.swift in Sources */,
 				1497EDD929C0F01F008F78DC /* GameViewController.swift in Sources */,
 				1497EDD129C0F01F008F78DC /* AppDelegate.swift in Sources */,
+				CA43227729E9CB4600B178E1 /* WelcomeScene.swift in Sources */,
 				149089C229CE0C8300D64012 /* Countryball.swift in Sources */,
 				147B0A3629E7260700C62ECF /* EndScene.swift in Sources */,
 			);
