@@ -56,6 +56,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var backgroundMusic: SKAudioNode!
     var muteButton: SKSpriteNode!
     var muted = false
+    
+    var soundEffects: SKAudioNode!
+    var muteSoundEffectsButton: SKSpriteNode!
+    var mutedSoundEffects = false
     var max: SKNode!
     var warning: SKNode!
     //To lose: if the ball's y + ball.height/2 >= max height
