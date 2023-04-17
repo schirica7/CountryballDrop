@@ -126,7 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic.run(SKAction.play())
         }
         
-<<<<<<< HEAD
+
         muteSoundEffectsButton = SKSpriteNode(imageNamed: "unMuteMusic")
         muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.93)
         muteSoundEffectsButton.zPosition = 2
@@ -139,8 +139,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(soundEffects)
         }
         
-=======
->>>>>>> dd95d2393d8e8df85d08e9d1d6284178cde48a0c
         timerLabel = SKLabelNode(fontNamed: "Times New Roman")
         timerLabel.text = "Score: 0"
         timerLabel.horizontalAlignmentMode = .left
