@@ -18,14 +18,16 @@ class WelcomeScene: SKScene {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         
 
-        var titleButton = SKSpriteNode(imageNamed: "title")
+        let titleButton = SKSpriteNode(imageNamed: "title")
         titleButton.name = "Title"
+        titleButton.size = CGSize(width: 400, height: 100)
         titleButton.zPosition = 2
         titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.7)
         addChild(titleButton)
 
         playButton = SKSpriteNode(imageNamed: "play")
         playButton.name = "Play"
+        playButton.size = CGSize(width: 200, height: 60)
         playButton.zPosition = 2
         playButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.5)
         addChild(playButton)
