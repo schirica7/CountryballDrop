@@ -174,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     muteSoundEffectsButton.texture = SKTexture(imageNamed: "muteMusic")
                     playSoundEffects = false
                 } else {
-                    muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "unMuteMusic")
                     playSoundEffects = true
                 }
                 return
