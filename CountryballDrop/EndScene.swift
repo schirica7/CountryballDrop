@@ -32,13 +32,6 @@ class EndScene: SKScene {
                 self.view?.presentScene(scene, transition: transition)
                 return
             }
-            
-            if nodes(at: location).contains(gameOver) {
-                let scene = SKScene(fileNamed: "WelcomeScene") as! WelcomeScene
-                let transition = SKTransition.crossFade(withDuration: 1)
-                self.view?.presentScene(scene, transition: transition)
-                return
-            }
 //                }
 //            } else {
 //                if nodes(at: location).contains(playAgain) {
@@ -53,14 +46,22 @@ class EndScene: SKScene {
     }
     
     func populateScene(win: Bool) {
-        //if !win {
+        if !win {
             gameOver = SKSpriteNode(imageNamed: "gameOver")
-            gameOver.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            gameOver.position = CGPoint(x: self.size.width/2, y: self.size.height*0.7)
             addChild(gameOver)
-            playAgain = SKLabelNode(text: "Play Again")
-            playAgain.position = CGPoint(x: self.size.width/2, y: self.size.height*0.4)
-        //} else {
-            //?
-        //}
+
+        } else {
+            let win = SKLabelNode(text: "You win!")
+            win.position = CGPoint(x: self.size.width/2, y: self.size.height*0.7)
+            addChild(win)
+            
+        }
+        
+        playAgain = SKLabelNode(text: "Play Again?")
+        playAgain.position = CGPoint(x: self.size.width/2, y: self.size.height*0.4)
+        playAgain.fontSize = 60
+        playAgain.fontName = "American Typewriter"
+        addChild(playAgain)
     }
 }

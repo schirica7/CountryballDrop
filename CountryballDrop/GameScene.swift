@@ -60,6 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var soundEffects: SKAudioNode!
     var muteSoundEffectsButton: SKSpriteNode!
     var mutedSoundEffects = false
+    var playSoundEffects = true
     var max: SKNode!
     var warning: SKNode!
     //To lose: if the ball's y + ball.height/2 >= max height
@@ -125,10 +126,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic.run(SKAction.play())
         }
         
-        timerLabel = SKLabelNode(fontNamed: "Dosis")
+<<<<<<< HEAD
+        muteSoundEffectsButton = SKSpriteNode(imageNamed: "unMuteMusic")
+        muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.93)
+        muteSoundEffectsButton.zPosition = 2
+        addChild(muteSoundEffectsButton)
+        
+        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "boom", withExtension: ".aiff") {
+            soundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+            soundEffects.autoplayLooped = false
+            soundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+            addChild(soundEffects)
+        }
+        
+=======
+>>>>>>> dd95d2393d8e8df85d08e9d1d6284178cde48a0c
+        timerLabel = SKLabelNode(fontNamed: "Times New Roman")
         timerLabel.text = "Score: 0"
         timerLabel.horizontalAlignmentMode = .left
-        timerLabel.position = CGPoint(x: self.size.width * 0.03, y: self.size.height * 0.87)
+        timerLabel.position = CGPoint(x: self.size.width * 0.03, y: self.size.height * 0.83)
         self.timerLabel.fontSize = 20
         self.addChild(timerLabel)
         
@@ -150,6 +166,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 } else {
                     muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
                     backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                }
+                return
+            }
+            
+            if objects.contains (muteSoundEffectsButton) {
+                mutedSoundEffects = !mutedSoundEffects
+                if mutedSoundEffects {
+                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "muteMusic")
+                    playSoundEffects = false
+                } else {
+                    muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                    playSoundEffects = true
                 }
                 return
             }
@@ -259,6 +287,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
                 }*/
                 combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
+                //MARK: cool thing here
+                if playSoundEffects {
+                    soundEffects.run(SKAction.play())
+                }
+                
             }
         }
     }

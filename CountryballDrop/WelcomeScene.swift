@@ -17,6 +17,13 @@ class WelcomeScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         
+
+        var titleButton = SKSpriteNode(imageNamed: "title")
+        titleButton.name = "Title"
+        titleButton.zPosition = 2
+        titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.7)
+        addChild(titleButton)
+
         playButton = SKSpriteNode(imageNamed: "play")
         playButton.name = "Play"
         playButton.zPosition = 2
@@ -24,7 +31,7 @@ class WelcomeScene: SKScene {
         addChild(playButton)
         
         muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
-        muteButton.position = CGPoint(x: self.size.width * 0.3, y: self.size.height * 0.2)
+        muteButton.position = CGPoint(x: self.size.width * 0.35, y: self.size.height * 0.35)
         muteButton.zPosition = 2
         addChild(muteButton)
         
