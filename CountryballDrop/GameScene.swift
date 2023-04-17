@@ -125,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic.run(SKAction.play())
         }
         
-        timerLabel = SKLabelNode(fontNamed: "Dosis")
+        timerLabel = SKLabelNode(fontNamed: "Times New Roman")
         timerLabel.text = "Score: 0"
         timerLabel.horizontalAlignmentMode = .left
         timerLabel.position = CGPoint(x: self.size.width * 0.03, y: self.size.height * 0.87)

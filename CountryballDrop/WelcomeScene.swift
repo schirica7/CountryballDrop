@@ -17,8 +17,13 @@ class WelcomeScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         
+<<<<<<< Updated upstream
         playButton = SKSpriteNode(imageNamed: "play")
         playButton.name = "Play"
+=======
+        playButton = SKSpriteNode(imageNamed: "title")
+        playButton.name = "Play!"
+>>>>>>> Stashed changes
         playButton.zPosition = 2
         playButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.5)
         addChild(playButton)
