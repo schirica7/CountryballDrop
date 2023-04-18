@@ -63,6 +63,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playSoundEffects = true
     var max: SKNode!
     var warning: SKNode!
+    
+    var resetButton: SKSpriteNode!
     //To lose: if the ball's y + ball.height/2 >= max height
     //Warning: if the ball's y + ball.height/2 >= warning height
     
@@ -114,6 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //generateBall()
         
         muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
+        muteButton.size = CGSize(width: 60, height: 60)
         muteButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.93)
         muteButton.zPosition = 2
         addChild(muteButton)
@@ -138,6 +141,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             soundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
             addChild(soundEffects)
         }
+        
+        resetButton = SKSpriteNode(imageNamed: "unMuteMusic") //MARK: need to replace
+        resetButton.size = CGSize(width: 60, height: 60)
+        resetButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.83)
+        resetButton.zPosition = 2
+        addChild(resetButton)
         
         timerLabel = SKLabelNode(fontNamed: "Times New Roman")
         timerLabel.text = "Score: 0"
@@ -166,6 +175,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
                 }
                 return
+            }
+            
+            if objects.contains (resetButton) {
+                
             }
             
             if objects.contains (muteSoundEffectsButton) {
