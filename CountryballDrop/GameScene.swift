@@ -190,7 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.physicsBody!.isDynamic = true
                     //cb.dropped = true
                     cb.physicsBody!.restitution = 0.005
-                    node.name = "ball"
+                    cb.ballNode.name = "ball"
                     cb.name = "ball"
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
@@ -215,11 +215,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
             cb.dropped = true
-            print(cb.dropped)
+            print("Dropped: \(cb.dropped)")
             
             if contact.bodyB.node?.name == "ball" {
                 let cb1 = contact.bodyB.node! as! Countryball
                 cb1.dropped = true
+                print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyB.node!)
             } else {
                 let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
@@ -236,6 +237,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if contact.bodyA.node?.name == "ball" {
                 let cb1 = contact.bodyA.node! as! Countryball
                 cb1.dropped = true
+                print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
                 //TODO: Random left/right direction
@@ -250,21 +252,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         //TODO: Update doesn't work
-        for node in children {
+        for (_, node) in self.children.enumerated() {
             if node.name == "ball" {
-                if node.intersects(max) {
-                    print("You lost")
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
-                        [unowned self] in
-                        //TODO: New Scene
-                        let scene = SKScene(fileNamed: "EndScene")! as! EndScene
-                        scene.win = false
+                print("hello gamers")
+                //let cb = node as! Countryball
+                
+                if node.position.y >= max.position.y {
+                    let cb = node as! Countryball
+                    print("Wowie!")
+                    if cb.dropped {
                         
-                        let transition = SKTransition.crossFade(withDuration: 1)
-                        self.view?.presentScene(scene, transition: transition)
+                        print("Does this ever get here?")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                         [unowned self] in
+                         //TODO: New Scene
+                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                         
+                         let transition = SKTransition.crossFade(withDuration: 1)
+                         self.view?.presentScene(scene, transition: transition)
+                         }
                     }
                 }
-                return
             }
         }
     }
@@ -272,11 +280,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func collisionBetween(cb: Countryball?, object: SKNode?) {
         //print(object?.name)
         if object?.name == "ball" && cb?.name == "ball" {
-            print("inside here")
+            //print("inside here")
             let cb2 = object as! Countryball
             
             if (cb!.ballName == cb2.ballName && cb2.ballName != "world") {
-                print("Balls combining: \(cb2.ballName)")
+                //print("Balls combining: \(cb2.ballName)")
                 let newX = (cb!.position.x + cb2.position.x)/2.0
                 let newY = (cb!.position.y + cb2.position.y)/2.0
                 
@@ -295,7 +303,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func combineCB(cb1: Countryball, cb2: Countryball, at position: CGPoint) {
-        print("inside")
+        //print("inside")
         var newCBName = ""
         
         for (index, name) in names.enumerated() {
@@ -321,6 +329,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBall.physicsBody!.contactTestBitMask = newBall.physicsBody!.collisionBitMask
                 addChild(newBall)
                 newBall.name = "ball"
+                newBall.ballNode.name = "ball"
                 //balls.append(newBall)
                 let velocity = CGVector(dx: newBall.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 1.5)
                 newBall.run(SKAction.applyForce(velocity, duration: 1))
@@ -339,7 +348,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
                 
-                print("Result: \(newCBName)")
+                //print("Result: \(newCBName)")
                 break
             }
         }
@@ -359,6 +368,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         addChild(ball)
         ball.name = "ready"
+        ball.ballNode.name = "ball"
     }
     
     func leftOrRight() -> Int {
