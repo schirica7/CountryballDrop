@@ -13,39 +13,33 @@ import GameplayKit
  TODO: Red line, touching red line = loses, red line @0.85 height
  TODO: Red line appears when you reach certain point @0.75 height
  TODO: Music✅
- TODO: Intro & Outro Scene With Graphics 
+ TODO: Intro & Outro Scene With Graphics
  TODO: If you have a world, you win - 1/2
  TODO: Timer ✅
  TODO: Emitter cell when combine
  
-I actually made a game though
+ I actually made a game though
  */
-enum Saved {
-    static let darkMode = "com.kayshov.chirica.countryballdrop.dark"
-}
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var label : SKLabelNode?
-    
     var timerLabel = SKLabelNode(text: "Time: 0")
     var minutes = 0
     var hours = 0
-        var counter = 0 {
-            didSet {
-                if counter >= 60 {
-                    minutes += 1
-                    counter = 0
-                    if minutes >= 60 {
-                        hours += 1
-                        minutes = 0
-                    }
+    var counter = 0 {
+        didSet {
+            if counter >= 60 {
+                minutes += 1
+                counter = 0
+                if minutes >= 60 {
+                    hours += 1
+                    minutes = 0
                 }
-                self.timerLabel.text = String(format: "Time: %02d:%02d:%02d", hours, minutes, counter)
             }
+            self.timerLabel.text = String(format: "Time: %02d:%02d:%02d", hours, minutes, counter)
         }
+    }
     
-    let saved = UserDefaults(suiteName: "com.kayshov.countryballdrop.chirica")
     var balls = [Countryball]()
     var spawnHeight = 0.87
     var maxHeight = 0.8
@@ -96,24 +90,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         warning = SKSpriteNode(color: UIColor(red: 1, green: 0, blue: 0, alpha: 1), size: warningSize)
         warning.zPosition = -1
         warning.position = CGPoint(x: self.size.width/2, y: self.size.height * warningHeight)
-       // warning.physicsBody = SKPhysicsBody(rectangleOf: warningSize)
-       // warning.physicsBody!.isDynamic = false
+        // warning.physicsBody = SKPhysicsBody(rectangleOf: warningSize)
+        // warning.physicsBody!.isDynamic = false
         warning.isHidden = true
         warning.name = "warning"
         addChild(warning)
         
-        //let warningSize = CGSize(width: self.size.width, height: 5)
         max = SKSpriteNode(color: UIColor(red: 0, green: 1, blue: 0, alpha: 1), size: warningSize)
         max.zPosition = -1
         max.position = CGPoint(x: self.size.width/2, y: self.size.height * maxHeight)
-        //max.physicsBody = SKPhysicsBody(rectangleOf: warningSize)
-       // max.physicsBody!.isDynamic = false
         max.isHidden = false
         max.name = "max"
         addChild(max)
         
         spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
-        //generateBall()
         
         muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
         muteButton.size = CGSize(width: 60, height: 60)
@@ -121,15 +111,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         muteButton.zPosition = 2
         addChild(muteButton)
         
+        //MARK: Background music
         if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
-            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
             addChild(backgroundMusic)
             backgroundMusic.run(SKAction.play())
+            
+            if muted {
+                muteButton.texture = SKTexture(imageNamed: "muteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+            } else {
+                muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+            }
         }
         
-
+        //MARK: Sound Effects
         muteSoundEffectsButton = SKSpriteNode(imageNamed: "unMuteMusic")
         muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.93)
         muteSoundEffectsButton.zPosition = 2
@@ -195,13 +193,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             for node in children {
                 if node.name == "ready" {
-                    //print("ball ready")
                     let cb = node as! Countryball
-                    
-                    //ball.physicsBody!.isDynamic = false
                     cb.position = CGPoint(x: location.x, y: node.position.y)
                     cb.physicsBody!.isDynamic = true
-                    //cb.dropped = true
                     cb.physicsBody!.restitution = 0.005
                     cb.ballNode.name = "ball"
                     cb.name = "ball"
@@ -211,15 +205,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
                     }
                     
-                    //return
-                    //print(node.)
-                    //no
                 }
             }
-            
-            /*for ball in balls {
-             }
-             }*/
         }
     }
     
@@ -287,13 +274,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                         print("Does this ever get here?")
                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                         [unowned self] in
-                         //TODO: New Scene
-                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
-                         
-                         let transition = SKTransition.crossFade(withDuration: 1)
-                         self.view?.presentScene(scene, transition: transition)
-                         }
+                            [unowned self] in
+                            //TODO: New Scene
+                            let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                            
+                            let transition = SKTransition.crossFade(withDuration: 1)
+                            self.view?.presentScene(scene, transition: transition)
+                        }
                     }
                 }
             }
@@ -312,9 +299,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let newY = (cb!.position.y + cb2.position.y)/2.0
                 
                 /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    [unowned self] in
-                    self.combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
-                }*/
+                 [unowned self] in
+                 self.combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
+                 }*/
                 combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
                 //MARK: cool thing here
                 if playSoundEffects {
@@ -335,7 +322,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newCBName = names[index + 1]
                 destroyBall(ball: cb1)
                 destroyBall(ball: cb2)
-
+                
                 
                 let newBall = Countryball()
                 newBall.spawn(at: position, named: newCBName)
@@ -363,12 +350,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
                 
-                //print("Result: \(newCBName)")
                 break
             }
         }
-        
-        
     }
     
     func destroyBall(ball: SKNode?) {
@@ -398,9 +382,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         return direction
     }
-    
-//    override func update(_ currentTime: TimeInterval) {
-//    }
 }
 
 

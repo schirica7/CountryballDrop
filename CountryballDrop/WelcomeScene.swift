@@ -54,7 +54,13 @@ class WelcomeScene: SKScene {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     [unowned self] in
                     //TODO: New Scene
-                    let scene = SKScene(fileNamed: "GameScene")!
+                    
+                    let scene = SKScene(fileNamed: "GameScene") as! GameScene
+                    if muted {
+                        scene.muted = true
+                    } else {
+                        scene.muted = false
+                    }
                     let transition = SKTransition.crossFade(withDuration: 1)
                     self.view?.presentScene(scene, transition: transition)
                 }
