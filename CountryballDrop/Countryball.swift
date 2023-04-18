@@ -12,7 +12,7 @@ class Countryball: SKSpriteNode {
     var ballNode: SKSpriteNode!
     var dropped = false {
         didSet {
-            print(dropped)
+            print("\(ballName) Dropped: \(dropped)")
         }
     }
     var ballName = ""
