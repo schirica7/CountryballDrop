@@ -135,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         muteSoundEffectsButton.zPosition = 2
         addChild(muteSoundEffectsButton)
         
-        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "boom", withExtension: ".aiff") {
+        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "sound effect #1", withExtension: ".mp3") {
             soundEffects = SKAudioNode(url: musicSoundEffectsLocation)
             soundEffects.autoplayLooped = false
             soundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
@@ -227,12 +227,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //TODO: Warning/max
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
-            cb.dropped = true
+            //cb.dropped = true
             print("Dropped: \(cb.dropped)")
             
             if contact.bodyB.node?.name == "ball" {
                 let cb1 = contact.bodyB.node! as! Countryball
-                cb1.dropped = true
+                //cb1.dropped = true
                 print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyB.node!)
             } else {
@@ -244,12 +244,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //contact.bodyA.node?.name = "ball"
         } else if (contact.bodyA.node?.name == "bottom" || contact.bodyA.node?.name == "ball") && contact.bodyB.node?.name == "ball" {
             let cb = contact.bodyB.node! as! Countryball
-            cb.dropped = true
+            //cb.dropped = true
             print(cb.dropped)
             
             if contact.bodyA.node?.name == "ball" {
                 let cb1 = contact.bodyA.node! as! Countryball
-                cb1.dropped = true
+                //cb1.dropped = true
                 print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
@@ -267,16 +267,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //TODO: Update doesn't work
         for (_, node) in self.children.enumerated() {
             if node.name == "ball" {
+                
+                if node.position.y < max.position.y {
+                    let cb = node as! Countryball
+                    
+                    if !cb.dropped {
+                        cb.dropped = true
+                    }
+                }
+                
                 print("hello gamers")
                 //let cb = node as! Countryball
                 
                 if node.position.y >= max.position.y {
                     let cb = node as! Countryball
                     print("Wowie!")
+                    
                     if cb.dropped {
                         
                         print("Does this ever get here?")
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
                          [unowned self] in
                          //TODO: New Scene
                          let scene = SKScene(fileNamed: "EndScene")! as! EndScene
@@ -323,14 +333,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if name == cb1.ballName && name == cb2.ballName {
                 //print("Result: \(name)")
                 newCBName = names[index + 1]
-                //let v1 = cb1.physicsBody?.
-                //let v2 = cb2.physicsBody?.velocity
-                //TODO: Random left/right direction
-                
-                /*for ball in balls {
-                
-                }*/
-                //balls.remove(at: <#T##Int#>)
                 destroyBall(ball: cb1)
                 destroyBall(ball: cb2)
 
