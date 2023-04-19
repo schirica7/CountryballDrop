@@ -22,7 +22,7 @@ class WelcomeScene: SKScene {
         titleButton.name = "Title"
         //titleButton.size = CGSize(width: 400, height: 100)
         titleButton.zPosition = 2
-        titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.7)
+        titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.65)
         addChild(titleButton)
 
         playButton = SKSpriteNode(imageNamed: "play")
@@ -33,7 +33,7 @@ class WelcomeScene: SKScene {
         addChild(playButton)
         
         muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
-        muteButton.position = CGPoint(x: self.size.width * 0.35, y: self.size.height * 0.35)
+        muteButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.35)
         muteButton.zPosition = 2
         addChild(muteButton)
         
@@ -65,6 +65,7 @@ class WelcomeScene: SKScene {
                     self.view?.presentScene(scene, transition: transition)
                 }
             }
+            
             if objects.contains (muteButton) {
                 muted = !muted
                 if muted {
@@ -76,11 +77,10 @@ class WelcomeScene: SKScene {
                 }
                 return
             }
+            
+            
+            
         }
-    }
-    
-    func populateScene(win: Bool) {
-       
     }
 }
 

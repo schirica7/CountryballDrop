@@ -10,8 +10,6 @@ import GameplayKit
 
 /*
  TODO: Menu button - music, restart, exit
- TODO: Red line, touching red line = loses, red line @0.85 height
- TODO: Red line appears when you reach certain point @0.75 height
  TODO: Music✅
  TODO: Intro & Outro Scene With Graphics
  TODO: If you have a world, you win - 1/2
@@ -19,6 +17,8 @@ import GameplayKit
  TODO: Emitter cell when combine
  
  I actually made a game though
+ 
+ 
  */
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -107,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
         muteButton.size = CGSize(width: 60, height: 60)
-        muteButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.93)
+        muteButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.95)
         muteButton.zPosition = 2
         addChild(muteButton)
         
@@ -128,7 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //MARK: Sound Effects
-        muteSoundEffectsButton = SKSpriteNode(imageNamed: "unMuteMusic")
+        muteSoundEffectsButton = SKSpriteNode(imageNamed: "UnmuteButton")
         muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.93)
         muteSoundEffectsButton.zPosition = 2
         addChild(muteSoundEffectsButton)
@@ -165,6 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let objects = nodes(at: location)
             if objects.contains (muteButton) {
                 muted = !muted
+                
                 if muted {
                     muteButton.texture = SKTexture(imageNamed: "muteMusic")
                     backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
@@ -175,17 +176,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             
+            //Reset button removes all balls, starts music back at the beginning, and carries over settings from previous game
             if objects.contains (resetButton) {
-                
+                //TODO: Pause timer when alert controller is showing, restart if hit no
+                let ac = UIAlertController(title: "Reset Game", message: "Are you sure you want to reset your game?", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: resetGame))
+                ac.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+                //ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                view?.window?.rootViewController?.present(ac, animated: true)
+                return
             }
             
             if objects.contains (muteSoundEffectsButton) {
                 mutedSoundEffects = !mutedSoundEffects
                 if mutedSoundEffects {
-                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "muteMusic")
+                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
                     playSoundEffects = false
                 } else {
-                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "UnmuteButton")
                     playSoundEffects = true
                 }
                 return
@@ -211,7 +219,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        //TODO: Warning/max
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
             cb.dropped = true
@@ -226,9 +233,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
                 cb.run(SKAction.applyForce(velocity, duration: 1))
             }
-            //balls.append(cb)
-            //print
-            //contact.bodyA.node?.name = "ball"
         } else if (contact.bodyA.node?.name == "bottom" || contact.bodyA.node?.name == "ball") && contact.bodyB.node?.name == "ball" {
             let cb = contact.bodyB.node! as! Countryball
             cb.dropped = true
@@ -240,18 +244,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
-                //TODO: Random left/right direction
                 let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
                 cb.run(SKAction.applyForce(velocity, duration: 1))
             }
-            //balls.append(cb)
-            //contact.bodyB.node?.name = "ball"
         }
         
     }
     
     override func update(_ currentTime: TimeInterval) {
-        //TODO: Update doesn't work
         for (_, node) in self.children.enumerated() {
             if node.name == "ball" {
                 
@@ -287,12 +287,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let cb2 = object as! Countryball
             
             if (cb!.ballName == cb2.ballName && cb2.ballName != "world") {
-                //print("Balls combining: \(cb2.ballName)")
                 let newX = (cb!.position.x + cb2.position.x)/2.0
                 let newY = (cb!.position.y + cb2.position.y)/2.0
                 
                 combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
-                //MARK: cool thing here
                 if playSoundEffects {
                     soundEffects.run(SKAction.play())
                 }
@@ -302,12 +300,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func combineCB(cb1: Countryball, cb2: Countryball, at position: CGPoint) {
-        //print("inside")
         var newCBName = ""
         
         for (index, name) in names.enumerated() {
             if name == cb1.ballName && name == cb2.ballName {
-                //print("Result: \(name)")
                 newCBName = names[index + 1]
                 destroyBall(ball: cb1)
                 destroyBall(ball: cb2)
@@ -367,6 +363,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         return direction
     }
+    
+    @objc func resetGame(action: UIAlertAction!) {
+        counter = 0
+        for node in self.children {
+            if node.name == "ball" || node.name == "ready" {
+                node.removeFromParent()
+            }
+        }
+        
+        spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
+        
+        if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
+            backgroundMusic.run(SKAction.stop())
+            backgroundMusic = SKAudioNode(url: musicLocation)
+            backgroundMusic.autoplayLooped = true
+            addChild(backgroundMusic)
+            backgroundMusic.run(SKAction.play())
+            
+            if muted {
+                muteButton.texture = SKTexture(imageNamed: "muteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+            } else {
+                muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+            }
+        }
+    }
 }
-
-
