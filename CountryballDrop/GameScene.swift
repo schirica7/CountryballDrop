@@ -200,7 +200,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.ballNode.name = "ball"
                     cb.name = "ball"
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         [unowned self] in
                         self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
                     }
@@ -214,12 +214,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //TODO: Warning/max
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
-            //cb.dropped = true
+            cb.dropped = true
             print("Dropped: \(cb.dropped)")
             
             if contact.bodyB.node?.name == "ball" {
                 let cb1 = contact.bodyB.node! as! Countryball
-                //cb1.dropped = true
+                cb1.dropped = true
                 print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyB.node!)
             } else {
@@ -231,12 +231,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //contact.bodyA.node?.name = "ball"
         } else if (contact.bodyA.node?.name == "bottom" || contact.bodyA.node?.name == "ball") && contact.bodyB.node?.name == "ball" {
             let cb = contact.bodyB.node! as! Countryball
-            //cb.dropped = true
+            cb.dropped = true
             print(cb.dropped)
             
             if contact.bodyA.node?.name == "ball" {
                 let cb1 = contact.bodyA.node! as! Countryball
-                //cb1.dropped = true
+                cb1.dropped = true
                 print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
@@ -273,14 +273,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if cb.dropped {
                         
                         print("Does this ever get here?")
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            [unowned self] in
-                            //TODO: New Scene
                             let scene = SKScene(fileNamed: "EndScene")! as! EndScene
-                            
                             let transition = SKTransition.crossFade(withDuration: 1)
                             self.view?.presentScene(scene, transition: transition)
-                        }
                     }
                 }
             }
@@ -288,9 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func collisionBetween(cb: Countryball?, object: SKNode?) {
-        //print(object?.name)
         if object?.name == "ball" && cb?.name == "ball" {
-            //print("inside here")
             let cb2 = object as! Countryball
             
             if (cb!.ballName == cb2.ballName && cb2.ballName != "world") {
@@ -298,10 +291,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let newX = (cb!.position.x + cb2.position.x)/2.0
                 let newY = (cb!.position.y + cb2.position.y)/2.0
                 
-                /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                 [unowned self] in
-                 self.combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
-                 }*/
                 combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
                 //MARK: cool thing here
                 if playSoundEffects {
@@ -332,22 +321,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 addChild(newBall)
                 newBall.name = "ball"
                 newBall.ballNode.name = "ball"
-                //balls.append(newBall)
                 let velocity = CGVector(dx: newBall.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 1.5)
                 newBall.run(SKAction.applyForce(velocity, duration: 1))
                 
                 newBall.dropped = true
                 
                 if newCBName == "world" && !newBall.intersects(max){
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        [unowned self] in
-                        //TODO: New Scene
+               
                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
                         scene.win = true
                         
                         let transition = SKTransition.crossFade(withDuration: 1)
                         self.view?.presentScene(scene, transition: transition)
-                    }
                 }
                 
                 break
