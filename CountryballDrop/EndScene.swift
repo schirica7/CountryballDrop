@@ -47,19 +47,18 @@ class EndScene: SKScene {
     
     func populateScene(win: Bool) {
         if !win {
-            gameOver = SKSpriteNode(imageNamed: "gameOver")
+            gameOver = SKSpriteNode(imageNamed: "lose")
             gameOver.position = CGPoint(x: self.size.width/2, y: self.size.height*0.7)
             addChild(gameOver)
 
         } else {
-            let win = SKLabelNode(text: "You win!")
-            playAgain.fontName = "Chalkduster"
-            win.fontSize = 60
+            let win = SKSpriteNode(imageNamed: "win")
             win.position = CGPoint(x: self.size.width/2, y: self.size.height*0.7)
             addChild(win)
             
         }
         
+        //playAgain.fontName = "Chalkduster"
         playAgain = SKLabelNode(text: "Play Again?")
         playAgain.position = CGPoint(x: self.size.width/2, y: self.size.height*0.4)
         playAgain.fontSize = 50

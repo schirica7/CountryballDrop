@@ -20,7 +20,7 @@ class WelcomeScene: SKScene {
 
         let titleButton = SKSpriteNode(imageNamed: "title")
         titleButton.name = "Title"
-        titleButton.size = CGSize(width: 400, height: 100)
+        //titleButton.size = CGSize(width: 400, height: 100)
         titleButton.zPosition = 2
         titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.7)
         addChild(titleButton)
