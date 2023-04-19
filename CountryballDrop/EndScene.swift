@@ -53,6 +53,8 @@ class EndScene: SKScene {
 
         } else {
             let win = SKLabelNode(text: "You win!")
+            playAgain.fontName = "Chalkduster"
+            win.fontSize = 60
             win.position = CGPoint(x: self.size.width/2, y: self.size.height*0.7)
             addChild(win)
             
@@ -60,7 +62,7 @@ class EndScene: SKScene {
         
         playAgain = SKLabelNode(text: "Play Again?")
         playAgain.position = CGPoint(x: self.size.width/2, y: self.size.height*0.4)
-        playAgain.fontSize = 60
+        playAgain.fontSize = 50
         playAgain.fontName = "American Typewriter"
         addChild(playAgain)
     }

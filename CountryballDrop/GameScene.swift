@@ -142,9 +142,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(soundEffects)
         }
         
-        resetButton = SKSpriteNode(imageNamed: "unMuteMusic") //MARK: need to replace
-        resetButton.size = CGSize(width: 60, height: 60)
-        resetButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.83)
+        resetButton = SKSpriteNode(imageNamed: "reset")
+        resetButton.size = CGSize(width: 68, height: 68)
+        resetButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.85)
         resetButton.zPosition = 2
         addChild(resetButton)
         
