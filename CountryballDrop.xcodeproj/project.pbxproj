@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		143E2D9529EF07D80060962F /* win noise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 143E2D9229EF07D80060962F /* win noise.mp3 */; };
+		143E2D9629EF07D80060962F /* sound effect #1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 143E2D9329EF07D80060962F /* sound effect #1.mp3 */; };
+		143E2D9729EF07D80060962F /* lose noise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 143E2D9429EF07D80060962F /* lose noise.mp3 */; };
 		147B0A3629E7260700C62ECF /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B0A3529E7260700C62ECF /* EndScene.swift */; };
 		147B0A3829E7261B00C62ECF /* EndScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147B0A3729E7261B00C62ECF /* EndScene.sks */; };
 		149089C229CE0C8300D64012 /* Countryball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149089C129CE0C8300D64012 /* Countryball.swift */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		143E2D9229EF07D80060962F /* win noise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "win noise.mp3"; sourceTree = SOURCE_ROOT; };
+		143E2D9329EF07D80060962F /* sound effect #1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound effect #1.mp3"; sourceTree = SOURCE_ROOT; };
+		143E2D9429EF07D80060962F /* lose noise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "lose noise.mp3"; sourceTree = SOURCE_ROOT; };
 		147B0A3529E7260700C62ECF /* EndScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
 		147B0A3729E7261B00C62ECF /* EndScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EndScene.sks; sourceTree = "<group>"; };
 		149089C129CE0C8300D64012 /* Countryball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countryball.swift; sourceTree = "<group>"; };
@@ -85,6 +91,9 @@
 				1497EDDF29C0F022008F78DC /* LaunchScreen.storyboard */,
 				CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */,
 				CA07335629EDC377001608B2 /* boom.aiff */,
+				143E2D9429EF07D80060962F /* lose noise.mp3 */,
+				143E2D9329EF07D80060962F /* sound effect #1.mp3 */,
+				143E2D9229EF07D80060962F /* win noise.mp3 */,
 			);
 			path = CountryballDrop;
 			sourceTree = "<group>";
@@ -147,7 +156,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				143E2D9529EF07D80060962F /* win noise.mp3 in Resources */,
+				143E2D9629EF07D80060962F /* sound effect #1.mp3 in Resources */,
 				1497EDDC29C0F01F008F78DC /* Main.storyboard in Resources */,
+				143E2D9729EF07D80060962F /* lose noise.mp3 in Resources */,
 				1497EDD329C0F01F008F78DC /* GameScene.sks in Resources */,
 				CA07335729EDC377001608B2 /* boom.aiff in Resources */,
 				1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */,
