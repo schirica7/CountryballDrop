@@ -51,8 +51,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var muted = false
     
     var soundEffects: SKAudioNode!
-    var loseSoundEffects: SKAudioNode!
-    var winSoundEffects: SKAudioNode!
     var muteSoundEffectsButton: SKSpriteNode!
     var mutedSoundEffects = false
     var playSoundEffects = true
@@ -110,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(muteButton)
         
         //MARK: Background music
-        if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
+        if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
             addChild(backgroundMusic)
@@ -127,6 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //MARK: Sound Effects
         muteSoundEffectsButton = SKSpriteNode(imageNamed: "UnmuteButton")
+        muteSoundEffectsButton.size = CGSize(width: 60, height: 60)
         muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.93)
         muteSoundEffectsButton.zPosition = 2
         addChild(muteSoundEffectsButton)
@@ -134,23 +133,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let musicSoundEffectsLocation = Bundle.main.url(forResource: "sound effect #1", withExtension: ".mp3") {
             soundEffects = SKAudioNode(url: musicSoundEffectsLocation)
             soundEffects.autoplayLooped = false
-            soundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+            soundEffects.run(SKAction.changeVolume(to: Float(0.30), duration: 0))
             addChild(soundEffects)
         }
         
-        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "lose noise", withExtension: ".mp3") {
-            loseSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
-            loseSoundEffects.autoplayLooped = false
-            loseSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-            addChild(loseSoundEffects)
-        }
         
-        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "win noise", withExtension: ".mp3") {
-            winSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
-            winSoundEffects.autoplayLooped = false
-            winSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-            addChild(winSoundEffects)
-        }
         
         resetButton = SKSpriteNode(imageNamed: "reset")
         resetButton.size = CGSize(width: 68, height: 68)
@@ -267,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for (_, node) in self.children.enumerated() {
             if node.name == "ball" {
                 
-                if node.position.y < max.position.y {
+                if node.position.y < max.position.y - 2.5 {
                     let cb = node as! Countryball
                     
                     if !cb.dropped {
@@ -278,17 +265,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //print("hello gamers")
                 //let cb = node as! Countryball
                 
-                if node.position.y >= max.position.y {
+                if node.position.y >= max.position.y - 2.5 {
                     let cb = node as! Countryball
                     //print("Wowie!")
                     
                     if cb.dropped {
-                        
-                        if playSoundEffects {
-                            loseSoundEffects.run(SKAction.play())
-                        }
-                        
                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                        scene.playSoundEffects = playSoundEffects
                         let transition = SKTransition.crossFade(withDuration: 1)
                         self.view?.presentScene(scene, transition: transition)
                     }
@@ -352,13 +335,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBall.dropped = true
                 
                 if newCBName == "world" && !newBall.intersects(max){
-                    
-                    if playSoundEffects {
-                        winSoundEffects.run(SKAction.play())
-                    }
-                    
+
                     let scene = SKScene(fileNamed: "EndScene")! as! EndScene
                     scene.win = true
+                    scene.playSoundEffects = playSoundEffects
                     
                     let transition = SKTransition.crossFade(withDuration: 1)
                     self.view?.presentScene(scene, transition: transition)
@@ -407,7 +387,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
         
-        if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
+        if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic.run(SKAction.stop())
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
