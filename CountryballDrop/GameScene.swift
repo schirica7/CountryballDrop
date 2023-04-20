@@ -17,8 +17,6 @@ import GameplayKit
  TODO: Emitter cell when combine
  
  I actually made a game though
- 
- 
  */
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -40,21 +38,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    var balls = [Countryball]()
     var spawnHeight = 0.87
     var maxHeight = 0.8
     var warningHeight = 0.6
+    var balls = [Countryball]()
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
                  "poland", "germany", "ukraine", "russia", "world"]
     var inMenu = false
+    
     var backgroundMusic: SKAudioNode!
     var muteButton: SKSpriteNode!
     var muted = false
     
     var soundEffects: SKAudioNode!
+    var loseSoundEffects: SKAudioNode!
+    var winSoundEffects: SKAudioNode!
     var muteSoundEffectsButton: SKSpriteNode!
     var mutedSoundEffects = false
     var playSoundEffects = true
+    
     var max: SKNode!
     var warning: SKNode!
     
@@ -67,11 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        //        maxHeight = self.size.height * 0.8
-        //        warningHeight = self.size.height * 0.6
-        //        spawnHeight = self.size.height * 0.87
-        //self.wid
-        
+        //MARK: Setting up the map
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
         
@@ -96,10 +94,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         warning.name = "warning"
         addChild(warning)
         
-        max = SKSpriteNode(color: UIColor(red: 0, green: 1, blue: 0, alpha: 1), size: warningSize)
+        max = SKSpriteNode(color: UIColor(red: 1, green: 0, blue: 0, alpha: 1), size: warningSize)
         max.zPosition = -1
         max.position = CGPoint(x: self.size.width/2, y: self.size.height * maxHeight)
-        max.isHidden = false
+        max.isHidden = true
         max.name = "max"
         addChild(max)
         
@@ -138,6 +136,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             soundEffects.autoplayLooped = false
             soundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
             addChild(soundEffects)
+        }
+        
+        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "lose noise", withExtension: ".mp3") {
+            loseSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+            loseSoundEffects.autoplayLooped = false
+            loseSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+            addChild(loseSoundEffects)
+        }
+        
+        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "win noise", withExtension: ".mp3") {
+            winSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+            winSoundEffects.autoplayLooped = false
+            winSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+            addChild(winSoundEffects)
         }
         
         resetButton = SKSpriteNode(imageNamed: "reset")
@@ -208,7 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.ballNode.name = "ball"
                     cb.name = "ball"
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         [unowned self] in
                         self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
                     }
@@ -263,20 +275,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
                 
-                print("hello gamers")
+                //print("hello gamers")
                 //let cb = node as! Countryball
                 
                 if node.position.y >= max.position.y {
                     let cb = node as! Countryball
-                    print("Wowie!")
+                    //print("Wowie!")
                     
                     if cb.dropped {
                         
-                        print("Does this ever get here?")
-                            let scene = SKScene(fileNamed: "EndScene")! as! EndScene
-                            let transition = SKTransition.crossFade(withDuration: 1)
-                            self.view?.presentScene(scene, transition: transition)
+                        if playSoundEffects {
+                            loseSoundEffects.run(SKAction.play())
+                        }
+                        
+                        let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                        let transition = SKTransition.crossFade(withDuration: 1)
+                        self.view?.presentScene(scene, transition: transition)
                     }
+                } else if node.position.y >= warning.position.y && node.physicsBody!.velocity.dy >= 0  {
+                    let cb = node as! Countryball
+                    if cb.dropped {
+                        if max.isHidden {
+                            max.isHidden = false
+                        }
+                    }
+                    
                 }
             }
         }
@@ -320,15 +343,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let velocity = CGVector(dx: newBall.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 1.5)
                 newBall.run(SKAction.applyForce(velocity, duration: 1))
                 
+                if let fireParticles = SKEmitterNode(fileNamed: "Spark") {
+                    fireParticles.position = newBall.position
+                        fireParticles.name = "fireParticles"
+                        addChild(fireParticles)
+                }
+            
                 newBall.dropped = true
                 
                 if newCBName == "world" && !newBall.intersects(max){
-               
-                        let scene = SKScene(fileNamed: "EndScene")! as! EndScene
-                        scene.win = true
-                        
-                        let transition = SKTransition.crossFade(withDuration: 1)
-                        self.view?.presentScene(scene, transition: transition)
+                    
+                    if playSoundEffects {
+                        winSoundEffects.run(SKAction.play())
+                    }
+                    
+                    let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                    scene.win = true
+                    
+                    let transition = SKTransition.crossFade(withDuration: 1)
+                    self.view?.presentScene(scene, transition: transition)
                 }
                 
                 break
