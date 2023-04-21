@@ -19,7 +19,7 @@ import GameplayKit
  I actually made a game though
  */
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
+    //MARK: Variables
     private var label : SKLabelNode?
     var timerLabel = SKLabelNode(text: "Time: 0")
     var minutes = 0
@@ -86,8 +86,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         warning = SKSpriteNode(color: UIColor(red: 1, green: 0, blue: 0, alpha: 1), size: warningSize)
         warning.zPosition = -1
         warning.position = CGPoint(x: self.size.width/2, y: self.size.height * warningHeight)
-        // warning.physicsBody = SKPhysicsBody(rectangleOf: warningSize)
-        // warning.physicsBody!.isDynamic = false
         warning.isHidden = true
         warning.name = "warning"
         addChild(warning)
@@ -157,11 +155,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //drop ball, change name
         if let touch = touches.first {
             let location = touch.location(in: self)
-            
             let objects = nodes(at: location)
+            
+            //MARK: Touching Mute Button
             if objects.contains (muteButton) {
                 muted = !muted
                 
@@ -175,17 +173,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             
+            //MARK: Touching Reset Button
             //Reset button removes all balls, starts music back at the beginning, and carries over settings from previous game
             if objects.contains (resetButton) {
                 //TODO: Pause timer when alert controller is showing, restart if hit no
                 let ac = UIAlertController(title: "Reset Game", message: "Are you sure you want to reset your game?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: resetGame))
                 ac.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-                //ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 view?.window?.rootViewController?.present(ac, animated: true)
                 return
             }
             
+            //MARK: Touching Sound Effects Button
             if objects.contains (muteSoundEffectsButton) {
                 mutedSoundEffects = !mutedSoundEffects
                 if mutedSoundEffects {
@@ -218,6 +217,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        //MARK: Collisions
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
             cb.dropped = true
@@ -262,14 +262,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
                 
-                //print("hello gamers")
-                //let cb = node as! Countryball
-                
                 if node.position.y >= max.position.y - 2.5 {
                     let cb = node as! Countryball
                     //print("Wowie!")
                     
-                    if cb.dropped {
+                    if cb.dropped && node.physicsBody!.velocity.dy >= 0 {
                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
                         scene.playSoundEffects = playSoundEffects
                         let transition = SKTransition.crossFade(withDuration: 1)
@@ -282,7 +279,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             max.isHidden = false
                         }
                     }
-                    
                 }
             }
         }
