@@ -21,7 +21,7 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Variables
     private var label : SKLabelNode?
-    var timerLabel = SKLabelNode(text: "Time: 0")
+    var timerLabel = SKLabelNode(text: "Time: 0:00")
     var minutes = 0
     var hours = 0
     var counter = 0 {
@@ -375,6 +375,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @objc func resetGame(action: UIAlertAction!) {
         counter = 0
+        minutes = 0
+        hours = 0
+        
+        timerLabel.text = "Time: 00:00:00"
+        
         for node in self.children {
             if node.name == "ball" || node.name == "ready" {
                 node.removeFromParent()
