@@ -17,6 +17,7 @@ class Countryball: SKSpriteNode {
     }
     var ballName = ""
     var ballSize: CGFloat = 0.0
+    var nameShown = false
     
     
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",

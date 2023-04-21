@@ -45,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
                  "poland", "germany", "ukraine", "russia", "world"]
     var inMenu = false
+    var showNames = true
     
     var backgroundMusic: SKAudioNode!
     var muteButton: SKSpriteNode!
@@ -124,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //MARK: Sound Effects
         muteSoundEffectsButton = SKSpriteNode(imageNamed: "UnmuteButton")
         muteSoundEffectsButton.size = CGSize(width: 60, height: 60)
-        muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.93)
+        muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.95)
         muteSoundEffectsButton.zPosition = 2
         addChild(muteSoundEffectsButton)
         
@@ -135,18 +136,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(soundEffects)
         }
         
-        
-        
         resetButton = SKSpriteNode(imageNamed: "reset")
         resetButton.size = CGSize(width: 68, height: 68)
         resetButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.85)
         resetButton.zPosition = 2
         addChild(resetButton)
         
-        timerLabel = SKLabelNode(fontNamed: "Times New Roman")
+        timerLabel = SKLabelNode(fontNamed: "American Typewriter")
         timerLabel.text = "Score: 0"
-        timerLabel.horizontalAlignmentMode = .left
-        timerLabel.position = CGPoint(x: self.size.width * 0.03, y: self.size.height * 0.83)
+        timerLabel.horizontalAlignmentMode = .center
+        timerLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.93)
         self.timerLabel.fontSize = 20
         self.addChild(timerLabel)
         
@@ -180,6 +179,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let ac = UIAlertController(title: "Reset Game", message: "Are you sure you want to reset your game?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: resetGame))
                 ac.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+                ac.addAction(UIAlertAction(title: "Menu", style: .default, handler: mainMenu))
                 view?.window?.rootViewController?.present(ac, animated: true)
                 return
             }
@@ -221,11 +221,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
             cb.dropped = true
+            if showNames && !cb.nameShown {
+                showName(cb: cb)
+                cb.nameShown = true
+            }
             print("Dropped: \(cb.dropped)")
             
             if contact.bodyB.node?.name == "ball" {
                 let cb1 = contact.bodyB.node! as! Countryball
                 cb1.dropped = true
+                
+                if showNames && !cb1.nameShown {
+                    showName(cb: cb1)
+                    cb1.nameShown = true
+                }
+                
                 print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyB.node!)
             } else {
@@ -235,11 +245,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if (contact.bodyA.node?.name == "bottom" || contact.bodyA.node?.name == "ball") && contact.bodyB.node?.name == "ball" {
             let cb = contact.bodyB.node! as! Countryball
             cb.dropped = true
+            
+            if showNames && !cb.nameShown {
+                showName(cb: cb)
+                cb.nameShown = true
+            }
             print(cb.dropped)
             
             if contact.bodyA.node?.name == "ball" {
                 let cb1 = contact.bodyA.node! as! Countryball
                 cb1.dropped = true
+                
+                if showNames && !cb1.nameShown {
+                    showName(cb: cb1)
+                    cb1.nameShown = true
+                }
                 print("Dropped: \(cb1.dropped)")
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
@@ -253,26 +273,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         for (_, node) in self.children.enumerated() {
             if node.name == "ball" {
+                let cBall = node as! Countryball
                 
-                if node.position.y < max.position.y - 2.5 {
-                    let cb = node as! Countryball
-                    
-                    if !cb.dropped {
-                        cb.dropped = true
+                if cBall.position.y + cBall.ballSize/2 < max.position.y - 2.5 {
+                    if !cBall.dropped {
+                        cBall.dropped = true
                     }
-                }
-                
-                if node.position.y >= max.position.y - 2.5 {
-                    let cb = node as! Countryball
-                    //print("Wowie!")
-                    
-                    if cb.dropped && node.physicsBody!.velocity.dy >= 0 {
+                } else {
+                    if cBall.dropped {
                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
                         scene.playSoundEffects = playSoundEffects
                         let transition = SKTransition.crossFade(withDuration: 1)
                         self.view?.presentScene(scene, transition: transition)
                     }
-                } else if node.position.y >= warning.position.y && node.physicsBody!.velocity.dy >= 0  {
+                }
+                
+                if node.position.y >= warning.position.y && node.physicsBody!.velocity.dy >= 0  {
                     let cb = node as! Countryball
                     if cb.dropped {
                         if max.isHidden {
@@ -287,6 +303,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func collisionBetween(cb: Countryball?, object: SKNode?) {
         if object?.name == "ball" && cb?.name == "ball" {
             let cb2 = object as! Countryball
+            
+            if showNames && !cb2.nameShown {
+                showName(cb: cb2)
+                cb2.nameShown = true
+            }
             
             if (cb!.ballName == cb2.ballName && cb2.ballName != "world") {
                 let newX = (cb!.position.x + cb2.position.x)/2.0
@@ -321,6 +342,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBall.ballNode.name = "ball"
                 let velocity = CGVector(dx: newBall.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: newBall.physicsBody!.mass * 1.5)
                 newBall.run(SKAction.applyForce(velocity, duration: 1))
+                if showNames && !newBall.nameShown {
+                    showName(cb: newBall)
+                    newBall.nameShown = true
+                }
                 
                 if let fireParticles = SKEmitterNode(fileNamed: "Spark") {
                     fireParticles.position = newBall.position
@@ -330,18 +355,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
                 newBall.dropped = true
                 
-                if newCBName == "world" && !newBall.intersects(max){
-
-                    let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                let scene = SKScene(fileNamed: "EndScene")! as! EndScene
+                
+                if newCBName == "world" && (newBall.position.y + newBall.ballSize/2 < max.position.y - 2.5){
                     scene.win = true
                     scene.playSoundEffects = playSoundEffects
-                    
+                    let transition = SKTransition.crossFade(withDuration: 1)
+                    self.view?.presentScene(scene, transition: transition)
+                } else if newBall.position.y + newBall.ballSize/2 >= max.position.y - 2.5 {
+                    scene.win = false
+                    scene.playSoundEffects = playSoundEffects
                     let transition = SKTransition.crossFade(withDuration: 1)
                     self.view?.presentScene(scene, transition: transition)
                 }
                 
                 break
             }
+        }
+    }
+    
+    func showName(cb: Countryball) {
+        var cbName = ""
+        
+        if cb.ballName == "uk" {
+            cbName = "UK"
+        } else if cb.ballName == "vatican"{
+            cbName = "Vatican City"
+        } else {
+            cbName = cb.ballName.capitalized
+        }
+        
+        let name = SKLabelNode(fontNamed: "American Typewriter")
+        name.text = cbName
+        name.position = CGPoint(x: cb.position.x, y: cb.position.y + cb.ballSize*1.05)
+        name.zPosition = 5
+        addChild(name)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            [unowned self] in
+            name.removeFromParent()
         }
     }
     
@@ -404,4 +456,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    
+    @objc func mainMenu(action: UIAlertAction!) {
+        let scene = SKScene(fileNamed: "WelcomeScene")! as! WelcomeScene
+        //scene.muted = muted
+        let transition = SKTransition.crossFade(withDuration: 1)
+        self.view?.presentScene(scene, transition: transition)
+    }
+    
+    /*func intersectsMax(cb: Countryball) -> Bool {
+        (newBall.position.y + newBall.frame.size.height/2 >= max.position.y - 2.5
+                   && newBall.position.y + newBall.frame.size.height/2 >= max.position.y + 2.5)
+    }*/
 }

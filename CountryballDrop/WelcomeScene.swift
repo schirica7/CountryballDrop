@@ -12,7 +12,18 @@ class WelcomeScene: SKScene {
     var playButton: SKSpriteNode!
     var backgroundMusic: SKAudioNode!
     var muteButton: SKSpriteNode!
-    var muted = false
+    var nameButton = SKSpriteNode()
+    var muted = false {
+        didSet {
+            if muted {
+                muteButton.texture = SKTexture(imageNamed: "muteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+            } else {
+                muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+            }
+        }
+    }
    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
@@ -32,10 +43,16 @@ class WelcomeScene: SKScene {
         playButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.5)
         addChild(playButton)
         
-        muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
-        muteButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.35)
+        muteButton = SKSpriteNode(texture: SKTexture(imageNamed: "unMuteMusic"))
+        muteButton.position = CGPoint(x: self.size.width * 0.35, y: self.size.height * 0.35)
         muteButton.zPosition = 2
         addChild(muteButton)
+        
+        nameButton = SKSpriteNode(texture: SKTexture(imageNamed: "showName"))
+        nameButton.position = CGPoint(x: self.size.width * 0.65, y: self.size.height * 0.35)
+        nameButton.zPosition = 2
+        addChild(nameButton)
+
         
         if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
@@ -68,13 +85,6 @@ class WelcomeScene: SKScene {
             
             if objects.contains (muteButton) {
                 muted = !muted
-                if muted {
-                    muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                    backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
-                } else {
-                    muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                    backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
-                }
                 return
             }
             
