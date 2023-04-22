@@ -2,7 +2,7 @@
 //  Countryball.swift
 //  CountryballDrop
 //
-//  Created by Sneezy on 3/24/23.
+//  Created by Stefan Chirica on 3/24/23.
 //
 
 import UIKit

@@ -2,7 +2,7 @@
 //  WelcomeScene.swift
 //  CountryballDrop
 //
-//  Created by Doc on 4/14/23.
+//  Created by Benjamin Hsiao on 4/14/23.
 //
 import UIKit
 import SpriteKit
@@ -21,6 +21,15 @@ class WelcomeScene: SKScene {
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
                 backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+            }
+        }
+    }
+    var showNames = true {
+        didSet {
+            if showNames {
+                nameButton.texture = SKTexture(imageNamed: "names")
+            } else {
+                nameButton.texture = SKTexture(imageNamed: "noNames")
             }
         }
     }
@@ -48,7 +57,7 @@ class WelcomeScene: SKScene {
         muteButton.zPosition = 2
         addChild(muteButton)
         
-        nameButton = SKSpriteNode(texture: SKTexture(imageNamed: "showName"))
+        nameButton = SKSpriteNode(texture: SKTexture(imageNamed: "names"))
         nameButton.position = CGPoint(x: self.size.width * 0.65, y: self.size.height * 0.35)
         nameButton.zPosition = 2
         addChild(nameButton)
@@ -73,11 +82,9 @@ class WelcomeScene: SKScene {
                     //TODO: New Scene
                     
                     let scene = SKScene(fileNamed: "GameScene") as! GameScene
-                    if muted {
-                        scene.muted = true
-                    } else {
-                        scene.muted = false
-                    }
+                    scene.muted = muted
+                    scene.showNames = showNames
+                    
                     let transition = SKTransition.crossFade(withDuration: 1)
                     self.view?.presentScene(scene, transition: transition)
                 }
@@ -88,8 +95,10 @@ class WelcomeScene: SKScene {
                 return
             }
             
-            
-            
+            if objects.contains (nameButton) {
+                showNames = !showNames
+                return
+            }
         }
     }
 }

@@ -45,7 +45,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
                  "poland", "germany", "ukraine", "russia", "world"]
     var inMenu = false
+    
     var showNames = true
+    var nameButton: SKSpriteNode!
     
     var backgroundMusic: SKAudioNode!
     var muteButton: SKSpriteNode!
@@ -100,7 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
         
-        muteButton = SKSpriteNode(imageNamed: "unMuteMusic")
+        muteButton = SKSpriteNode(texture: SKTexture(imageNamed: "unMuteMusic"))
         muteButton.size = CGSize(width: 60, height: 60)
         muteButton.position = CGPoint(x: self.size.width * 0.87, y: self.size.height * 0.95)
         muteButton.zPosition = 2
@@ -125,15 +127,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //MARK: Sound Effects
         muteSoundEffectsButton = SKSpriteNode(imageNamed: "UnmuteButton")
         muteSoundEffectsButton.size = CGSize(width: 60, height: 60)
-        muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.95)
+        muteSoundEffectsButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.85)
         muteSoundEffectsButton.zPosition = 2
         addChild(muteSoundEffectsButton)
         
-        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "sound effect #1", withExtension: ".mp3") {
+        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "sound effect #1", withExtension: ".aiff") {
             soundEffects = SKAudioNode(url: musicSoundEffectsLocation)
             soundEffects.autoplayLooped = false
             soundEffects.run(SKAction.changeVolume(to: Float(0.30), duration: 0))
             addChild(soundEffects)
+        }
+        
+        //MARK: Country Names
+        nameButton = SKSpriteNode(texture: SKTexture(imageNamed: "names"))
+        nameButton.size = CGSize(width: 60, height: 60)
+        nameButton.position = CGPoint(x: self.size.width * 0.13, y: self.size.height * 0.95)
+        nameButton.zPosition = 2
+        addChild(nameButton)
+        
+        if showNames {
+            nameButton.texture = SKTexture(imageNamed: "names")
+        } else {
+            nameButton.texture = SKTexture(imageNamed: "noNames")
         }
         
         resetButton = SKSpriteNode(imageNamed: "reset")
@@ -172,6 +187,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             
+            //MARK: Touching Sound Effects Button
+            if objects.contains (muteSoundEffectsButton) {
+                mutedSoundEffects = !mutedSoundEffects
+                
+                if mutedSoundEffects {
+                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
+                    playSoundEffects = false
+                } else {
+                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "UnmuteButton")
+                    playSoundEffects = true
+                }
+                return
+            }
+            
+            if objects.contains(nameButton) {
+                showNames = !showNames
+                
+                if showNames {
+                    nameButton.texture = SKTexture(imageNamed: "names")
+                } else {
+                    nameButton.texture = SKTexture(imageNamed: "noNames")
+                }
+                return
+            }
             //MARK: Touching Reset Button
             //Reset button removes all balls, starts music back at the beginning, and carries over settings from previous game
             if objects.contains (resetButton) {
@@ -181,19 +220,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ac.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
                 ac.addAction(UIAlertAction(title: "Menu", style: .default, handler: mainMenu))
                 view?.window?.rootViewController?.present(ac, animated: true)
-                return
-            }
-            
-            //MARK: Touching Sound Effects Button
-            if objects.contains (muteSoundEffectsButton) {
-                mutedSoundEffects = !mutedSoundEffects
-                if mutedSoundEffects {
-                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
-                    playSoundEffects = false
-                } else {
-                    muteSoundEffectsButton.texture = SKTexture(imageNamed: "UnmuteButton")
-                    playSoundEffects = true
-                }
                 return
             }
             
@@ -463,9 +489,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let transition = SKTransition.crossFade(withDuration: 1)
         self.view?.presentScene(scene, transition: transition)
     }
-    
-    /*func intersectsMax(cb: Countryball) -> Bool {
-        (newBall.position.y + newBall.frame.size.height/2 >= max.position.y - 2.5
-                   && newBall.position.y + newBall.frame.size.height/2 >= max.position.y + 2.5)
-    }*/
 }

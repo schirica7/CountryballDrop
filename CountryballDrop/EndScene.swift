@@ -2,7 +2,7 @@
 //  EndScene.swift
 //  CountryballDrop
 //
-//  Created by Sneezy on 4/12/23.
+//  Created by Stefan Chirica on 4/12/23.
 //
 
 import UIKit
