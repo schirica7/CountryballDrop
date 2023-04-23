@@ -9,9 +9,9 @@ import SpriteKit
 
 class WelcomeScene: SKScene {
 
-    var playButton: SKSpriteNode!
-    var backgroundMusic: SKAudioNode!
-    var muteButton: SKSpriteNode!
+    var playButton = SKSpriteNode()
+    var backgroundMusic = SKAudioNode()
+    var muteButton = SKSpriteNode()
     var nameButton = SKSpriteNode()
     var muted = false {
         didSet {
@@ -33,6 +33,7 @@ class WelcomeScene: SKScene {
             }
         }
     }
+    var playSoundEffects = true
    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
@@ -61,6 +62,11 @@ class WelcomeScene: SKScene {
         nameButton.position = CGPoint(x: self.size.width * 0.65, y: self.size.height * 0.35)
         nameButton.zPosition = 2
         addChild(nameButton)
+        if showNames {
+            nameButton.texture = SKTexture(imageNamed: "names")
+        } else {
+            nameButton.texture = SKTexture(imageNamed: "noNames")
+        }
 
         
         if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
@@ -69,6 +75,14 @@ class WelcomeScene: SKScene {
             backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
             addChild(backgroundMusic)
             backgroundMusic.run(SKAction.play())
+            
+            if muted {
+                muteButton.texture = SKTexture(imageNamed: "muteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+            } else {
+                muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+            }
         }
     }
     
@@ -84,6 +98,7 @@ class WelcomeScene: SKScene {
                     let scene = SKScene(fileNamed: "GameScene") as! GameScene
                     scene.muted = muted
                     scene.showNames = showNames
+                    scene.playSoundEffects = playSoundEffects
                     
                     let transition = SKTransition.crossFade(withDuration: 1)
                     self.view?.presentScene(scene, transition: transition)

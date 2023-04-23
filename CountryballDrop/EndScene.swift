@@ -12,8 +12,10 @@ class EndScene: SKScene {
 
     var win = false
     var playSoundEffects = false
-    var loseSoundEffects: SKAudioNode!
-    var winSoundEffects: SKAudioNode!
+    var muted = false
+    var showNames = false
+    var loseSoundEffects = SKAudioNode()
+    var winSoundEffects = SKAudioNode()
     var gameOver = SKSpriteNode()
     var playAgain = SKLabelNode()
     var menu = SKLabelNode()
@@ -27,11 +29,13 @@ class EndScene: SKScene {
         if let touch = touches.first {
             let location = touch.location(in: self)
             
-//            if !win {
             if nodes(at: location).contains(playAgain) {
                 let scene = SKScene(fileNamed: "GameScene")! as! GameScene
                 
-                //scene.tim
+                scene.playSoundEffects = playSoundEffects
+                scene.muted = muted
+                scene.showNames = showNames
+                
                 let transition = SKTransition.crossFade(withDuration: 1)
                 self.view?.presentScene(scene, transition: transition)
                 return
@@ -40,7 +44,10 @@ class EndScene: SKScene {
             if nodes(at: location).contains(menu) {
                 let scene = SKScene(fileNamed: "WelcomeScene")! as! WelcomeScene
                 
-                //scene.tim
+                scene.muted = muted
+                scene.showNames = showNames
+                scene.playSoundEffects = playSoundEffects
+                
                 let transition = SKTransition.crossFade(withDuration: 1)
                 self.view?.presentScene(scene, transition: transition)
                 return
@@ -61,7 +68,6 @@ class EndScene: SKScene {
             
         }
         
-        //playAgain.fontName = "Chalkduster"
         playAgain = SKLabelNode(text: "Play Again?")
         playAgain.position = CGPoint(x: self.size.width/2, y: self.size.height*0.4)
         playAgain.fontSize = 50

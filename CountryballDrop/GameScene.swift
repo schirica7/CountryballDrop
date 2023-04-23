@@ -9,7 +9,7 @@ import SpriteKit
 import GameplayKit
 
 /*
- TODO: Menu button - music, restart, exit
+ TODO: Menu button - music, restart, exit 
  TODO: Music✅
  TODO: Intro & Outro Scene With Graphics
  TODO: If you have a world, you win - 1/2
@@ -20,7 +20,7 @@ import GameplayKit
  */
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Variables
-    private var label : SKLabelNode?
+    private var label = SKLabelNode()
     var timerLabel = SKLabelNode(text: "Time: 0:00")
     var minutes = 0
     var hours = 0
@@ -47,21 +47,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var inMenu = false
     
     var showNames = true
-    var nameButton: SKSpriteNode!
+    var nameButton = SKSpriteNode()
     
-    var backgroundMusic: SKAudioNode!
-    var muteButton: SKSpriteNode!
+    var backgroundMusic = SKAudioNode()
+    var muteButton = SKSpriteNode()
     var muted = false
     
-    var soundEffects: SKAudioNode!
-    var muteSoundEffectsButton: SKSpriteNode!
+    var soundEffects = SKAudioNode()
+    var muteSoundEffectsButton = SKSpriteNode()
     var mutedSoundEffects = false
     var playSoundEffects = true
     
-    var max: SKNode!
-    var warning: SKNode!
+    var max = SKNode()
+    var warning = SKNode()
     
-    var resetButton: SKSpriteNode!
+    var resetButton = SKSpriteNode()
     //To lose: if the ball's y + ball.height/2 >= max height
     //Warning: if the ball's y + ball.height/2 >= warning height
     
@@ -136,6 +136,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             soundEffects.autoplayLooped = false
             soundEffects.run(SKAction.changeVolume(to: Float(0.30), duration: 0))
             addChild(soundEffects)
+            
+            if mutedSoundEffects {
+                muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
+                playSoundEffects = false
+            } else {
+                muteSoundEffectsButton.texture = SKTexture(imageNamed: "UnmuteButton")
+                playSoundEffects = true
+            }
         }
         
         //MARK: Country Names
@@ -247,11 +255,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
             cb.dropped = true
+      
             if showNames && !cb.nameShown {
                 showName(cb: cb)
-                cb.nameShown = true
             }
-            print("Dropped: \(cb.dropped)")
+            
+            cb.nameShown = true
             
             if contact.bodyB.node?.name == "ball" {
                 let cb1 = contact.bodyB.node! as! Countryball
@@ -259,10 +268,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if showNames && !cb1.nameShown {
                     showName(cb: cb1)
-                    cb1.nameShown = true
                 }
                 
-                print("Dropped: \(cb1.dropped)")
+                cb1.nameShown = true
                 collisionBetween(cb: cb, object: contact.bodyB.node!)
             } else {
                 let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
@@ -274,9 +282,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if showNames && !cb.nameShown {
                 showName(cb: cb)
-                cb.nameShown = true
             }
-            print(cb.dropped)
+            
+            cb.nameShown = true
             
             if contact.bodyA.node?.name == "ball" {
                 let cb1 = contact.bodyA.node! as! Countryball
@@ -284,9 +292,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if showNames && !cb1.nameShown {
                     showName(cb: cb1)
-                    cb1.nameShown = true
                 }
-                print("Dropped: \(cb1.dropped)")
+                
+                cb1.nameShown = true
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
             } else {
                 let velocity = CGVector(dx: cb.physicsBody!.mass * 1.5 * CGFloat(leftOrRight()), dy: cb.physicsBody!.mass * 1.5)
@@ -309,6 +317,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if cBall.dropped {
                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
                         scene.playSoundEffects = playSoundEffects
+                        scene.muted = muted
+                        scene.showNames = showNames
                         let transition = SKTransition.crossFade(withDuration: 1)
                         self.view?.presentScene(scene, transition: transition)
                     }
@@ -385,11 +395,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if newCBName == "world" && (newBall.position.y + newBall.ballSize/2 < max.position.y - 2.5){
                     scene.win = true
+                    scene.muted = muted
+                    scene.showNames = showNames
                     scene.playSoundEffects = playSoundEffects
                     let transition = SKTransition.crossFade(withDuration: 1)
                     self.view?.presentScene(scene, transition: transition)
                 } else if newBall.position.y + newBall.ballSize/2 >= max.position.y - 2.5 {
                     scene.win = false
+                    scene.muted = muted
+                    scene.showNames = showNames
                     scene.playSoundEffects = playSoundEffects
                     let transition = SKTransition.crossFade(withDuration: 1)
                     self.view?.presentScene(scene, transition: transition)
@@ -418,7 +432,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(name)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            [unowned self] in
             name.removeFromParent()
         }
     }
@@ -485,7 +498,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @objc func mainMenu(action: UIAlertAction!) {
         let scene = SKScene(fileNamed: "WelcomeScene")! as! WelcomeScene
-        //scene.muted = muted
+        scene.muted = muted
+        scene.showNames = showNames
+        scene.playSoundEffects = playSoundEffects
         let transition = SKTransition.crossFade(withDuration: 1)
         self.view?.presentScene(scene, transition: transition)
     }
