@@ -38,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    var spawnHeight = 0.87
+    var spawnHeight = 0.85
     var maxHeight = 0.8
     var warningHeight = 0.6
     var balls = [Countryball]()
@@ -168,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         timerLabel = SKLabelNode(fontNamed: "American Typewriter")
         timerLabel.text = "Score: 0"
         timerLabel.horizontalAlignmentMode = .center
-        timerLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.93)
+        timerLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.923)
         self.timerLabel.fontSize = 20
         self.addChild(timerLabel)
         
