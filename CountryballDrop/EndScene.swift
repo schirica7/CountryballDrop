@@ -23,6 +23,12 @@ class EndScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         populateScene(win: win, soundEffects: playSoundEffects)
+        
+        if let vc = self.view?.window?.rootViewController {
+            let gameVC = vc as! GameViewController
+            gameVC.banner.isAutoloadEnabled = true
+            gameVC.banner.isHidden = true
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

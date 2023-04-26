@@ -2,7 +2,7 @@
 //  GameViewController.swift
 //  CountryballDrop
 //
-//  Created by Sneezy on 3/14/23.
+//  Created by Stefan Chirica on 3/14/23.
 //
 
 import GoogleMobileAds
@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-    private let banner: GADBannerView = {
+    let banner: GADBannerView = {
         let bannerView = GADBannerView()
         bannerView.adUnitID = "ca-app-pub-6080953864782497/4087148077"
         return bannerView
@@ -21,10 +21,11 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        banner.backgroundColor = .systemGray
         view.addSubview(banner)
+        banner.backgroundColor = UIColor(red: 255/255, green: 210/255, blue: 79/255, alpha: 1)
         banner.rootViewController = self
         banner.load(GADRequest())
+        banner.isHidden = true
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'

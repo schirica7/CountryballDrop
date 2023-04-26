@@ -34,11 +34,10 @@ class WelcomeScene: SKScene {
         }
     }
     var playSoundEffects = true
+    //var vc: UIViewController!
    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
-        
-
         let titleButton = SKSpriteNode(imageNamed: "title")
         titleButton.name = "Title"
         //titleButton.size = CGSize(width: 400, height: 100)
@@ -84,6 +83,13 @@ class WelcomeScene: SKScene {
                 backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
         }
+        
+        if let vc = self.view?.window?.rootViewController {
+            let gameVC = vc as! GameViewController
+            gameVC.banner.isAutoloadEnabled = true
+            gameVC.banner.isHidden = true
+        }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

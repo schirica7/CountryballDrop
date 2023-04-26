@@ -8,16 +8,6 @@
 import SpriteKit
 import GameplayKit
 
-/*
- TODO: Menu button - music, restart, exit 
- TODO: Music✅
- TODO: Intro & Outro Scene With Graphics
- TODO: If you have a world, you win - 1/2
- TODO: Timer ✅
- TODO: Emitter cell when combine
- 
- I actually made a game though
- */
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Variables
     private var label = SKLabelNode()
@@ -173,6 +163,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(timerLabel)
         
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(count), SKAction.wait(forDuration: 1)])))
+        
+        if let vc = self.view?.window?.rootViewController {
+            let gameVC = vc as! GameViewController
+            gameVC.banner.isAutoloadEnabled = true
+            gameVC.banner.isHidden = false
+        }
     }
     
     
