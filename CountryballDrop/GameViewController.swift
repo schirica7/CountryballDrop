@@ -13,17 +13,13 @@ import GameplayKit
 class GameViewController: UIViewController {
     private let banner: GADBannerView = {
         let bannerView = GADBannerView()
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        //bannerView.adUnitID = "ca-app-pub-6080953864782497/4087148077"
+        bannerView.adUnitID = "ca-app-pub-6080953864782497/4087148077"
         return bannerView
     }()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         
         banner.backgroundColor = .systemGray
         view.addSubview(banner)
