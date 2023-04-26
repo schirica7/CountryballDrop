@@ -68,7 +68,7 @@ class WelcomeScene: SKScene {
         }
 
         
-        if let musicLocation = Bundle.main.url(forResource: "kazooMusic", withExtension: ".mp3") {
+        if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
             backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
