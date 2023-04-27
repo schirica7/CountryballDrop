@@ -172,12 +172,56 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let location = touch.location(in: self)
+            let objects = nodes(at: location)
+            
+            //MARK: Touching Mute Button
+            if objects.contains (muteButton) {
+                return
+            }
+
+
+            //MARK: Touching Sound Effects Button
+            if objects.contains (muteSoundEffectsButton) {
+                return
+            }
+
+            if objects.contains(nameButton) {
+                return
+            }
+            
+            //MARK: Touching Reset Button
+            //Reset button removes all balls, starts music back at the beginning, and carries over settings from previous game
+            if objects.contains (resetButton) {
+                //TODO: Pause timer when alert controller is showing, restart if hit no
+                return
+            }
+            
+            for node in children {
+                if node.name == "ready" {
+                    let cb = node as! Countryball
+                    cb.position = CGPoint(x: location.x, y: node.position.y)
+                    cb.physicsBody!.isDynamic = true
+                    cb.physicsBody!.restitution = 0.005
+                    cb.ballNode.name = "ball"
+                    cb.name = "ball"
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        [unowned self] in
+                        self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
+                    }
+                    
+                }
+            }
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
             let objects = nodes(at: location)
-            
             //MARK: Touching Mute Button
             if objects.contains (muteButton) {
                 muted = !muted
@@ -191,6 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 return
             }
+            
             
             //MARK: Touching Sound Effects Button
             if objects.contains (muteSoundEffectsButton) {
@@ -227,25 +272,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 view?.window?.rootViewController?.present(ac, animated: true)
                 return
             }
-            
-            for node in children {
-                if node.name == "ready" {
-                    let cb = node as! Countryball
-                    cb.position = CGPoint(x: location.x, y: node.position.y)
-                    cb.physicsBody!.isDynamic = true
-                    cb.physicsBody!.restitution = 0.005
-                    cb.ballNode.name = "ball"
-                    cb.name = "ball"
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        [unowned self] in
-                        self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
-                    }
-                    
-                }
-            }
         }
+        
     }
+
     
     func didBegin(_ contact: SKPhysicsContact) {
         //MARK: Collisions
@@ -287,9 +317,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let cb1 = contact.bodyA.node! as! Countryball
                 cb1.dropped = true
                 
-                if showNames && !cb1.nameShown {
+                /*if showNames && !cb1.nameShown {
                     showName(cb: cb1)
-                }
+                }*/
                 
                 cb1.nameShown = true
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
@@ -337,18 +367,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if object?.name == "ball" && cb?.name == "ball" {
             let cb2 = object as! Countryball
             
-            if showNames && !cb2.nameShown {
-                showName(cb: cb2)
-                cb2.nameShown = true
-            }
-            
             if (cb!.ballName == cb2.ballName && cb2.ballName != "world") {
                 let newX = (cb!.position.x + cb2.position.x)/2.0
                 let newY = (cb!.position.y + cb2.position.y)/2.0
                 
-                combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
-                if playSoundEffects {
-                    soundEffects.run(SKAction.play())
+                
+                destroyBall(ball: cb!)
+                destroyBall(ball: cb2)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    [unowned self] in
+                    
+                    combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
+                    
+                    if playSoundEffects {
+                        soundEffects.run(SKAction.play())
+                    }
+                    /*if showNames && !cb2.nameShown {
+                        showName(cb: cb2)
+                        cb2.nameShown = true
+                    }*/
                 }
                 
             }
@@ -361,8 +399,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for (index, name) in names.enumerated() {
             if name == cb1.ballName && name == cb2.ballName {
                 newCBName = names[index + 1]
-                destroyBall(ball: cb1)
-                destroyBall(ball: cb2)
+                
                 
                 
                 let newBall = Countryball()
