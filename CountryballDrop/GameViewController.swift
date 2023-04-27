@@ -22,14 +22,14 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(banner)
-        banner.backgroundColor = UIColor(red: 255/255, green: 210/255, blue: 79/255, alpha: 1)
+        banner.backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         banner.rootViewController = self
         banner.load(GADRequest())
         banner.isHidden = true
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "WelcomeScene") {
+            if let scene = SKScene(fileNamed: "LogoScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .resizeFill
                 

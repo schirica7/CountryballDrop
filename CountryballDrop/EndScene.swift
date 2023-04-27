@@ -26,6 +26,7 @@ class EndScene: SKScene {
         
         if let vc = self.view?.window?.rootViewController {
             let gameVC = vc as! GameViewController
+            gameVC.banner.backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
             gameVC.banner.isAutoloadEnabled = true
             gameVC.banner.isHidden = true
         }

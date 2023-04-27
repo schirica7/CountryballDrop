@@ -166,6 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if let vc = self.view?.window?.rootViewController {
             let gameVC = vc as! GameViewController
+            gameVC.banner.backgroundColor = UIColor(red: 255/255, green: 210/255, blue: 79/255, alpha: 1)
             gameVC.banner.isAutoloadEnabled = true
             gameVC.banner.isHidden = false
         }
