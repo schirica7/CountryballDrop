@@ -51,6 +51,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var max = SKNode()
     var warning = SKNode()
     
+    let feedbackGen = UINotificationFeedbackGenerator()
+    
+    
     var resetButton = SKSpriteNode()
     //To lose: if the ball's y + ball.height/2 >= max height
     //Warning: if the ball's y + ball.height/2 >= warning height
@@ -381,6 +384,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
                     
                     if playSoundEffects {
+                        feedbackGen.notificationOccurred(.success)
                         soundEffects.run(SKAction.play())
                     }
                     /*if showNames && !cb2.nameShown {
