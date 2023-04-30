@@ -367,6 +367,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func collisionBetween(cb: Countryball?, object: SKNode?) {
+        if playSoundEffects {
+            feedbackGen.notificationOccurred(.success)
+        }
+        
         if object?.name == "ball" && cb?.name == "ball" {
             let cb2 = object as! Countryball
             
@@ -384,7 +388,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
                     
                     if playSoundEffects {
-                        feedbackGen.notificationOccurred(.success)
                         soundEffects.run(SKAction.play())
                     }
                     /*if showNames && !cb2.nameShown {
