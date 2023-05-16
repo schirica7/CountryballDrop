@@ -2,7 +2,7 @@
 //  Countryball.swift
 //  CountryballDrop
 //
-//  Created by Sneezy on 3/24/23.
+//  Created by Stefan Chirica on 3/24/23.
 //
 
 import UIKit
@@ -17,6 +17,7 @@ class Countryball: SKSpriteNode {
     }
     var ballName = ""
     var ballSize: CGFloat = 0.0
+    var nameShown = false
     
     
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
@@ -50,4 +51,5 @@ class Countryball: SKSpriteNode {
         ballName = name
         return name
     }
+    
 }

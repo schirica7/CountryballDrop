@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		143E2D9529EF07D80060962F /* win noise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 143E2D9229EF07D80060962F /* win noise.mp3 */; };
-		143E2D9629EF07D80060962F /* sound effect #1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 143E2D9329EF07D80060962F /* sound effect #1.mp3 */; };
 		143E2D9729EF07D80060962F /* lose noise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 143E2D9429EF07D80060962F /* lose noise.mp3 */; };
 		147B0A3629E7260700C62ECF /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B0A3529E7260700C62ECF /* EndScene.swift */; };
 		147B0A3829E7261B00C62ECF /* EndScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147B0A3729E7261B00C62ECF /* EndScene.sks */; };
@@ -20,6 +19,12 @@
 		1497EDDC29C0F01F008F78DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDA29C0F01F008F78DC /* Main.storyboard */; };
 		1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDD29C0F022008F78DC /* Assets.xcassets */; };
 		1497EDE129C0F022008F78DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1497EDDF29C0F022008F78DC /* LaunchScreen.storyboard */; };
+		4B21BABB29F46A3B00687386 /* sound effect #1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4B21BABA29F46A3B00687386 /* sound effect #1.aiff */; };
+		4BA671A129F16A3900E4CA2C /* menu sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4BA671A029F16A3900E4CA2C /* menu sound.mp3 */; };
+		4BA671A329F16E6600E4CA2C /* Spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4BA671A229F16E6600E4CA2C /* Spark.sks */; };
+		4BC946C929F9C5F40099B55B /* LogoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4BC946C829F9C5F40099B55B /* LogoScene.sks */; };
+		4BC946CD29F9C6420099B55B /* LogoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC946CC29F9C6420099B55B /* LogoScene.swift */; };
+		B36E2AF53AB2D5F07F65B5C0 /* Pods_CountryballDrop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950879976F7D05C0E70B117F /* Pods_CountryballDrop.framework */; };
 		CA07335729EDC377001608B2 /* boom.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CA07335629EDC377001608B2 /* boom.aiff */; };
 		CA43227329E9CAC600B178E1 /* WelcomeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = CA43227229E9CAC600B178E1 /* WelcomeScene.sks */; };
 		CA43227729E9CB4600B178E1 /* WelcomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA43227629E9CB4600B178E1 /* WelcomeScene.swift */; };
@@ -28,7 +33,6 @@
 
 /* Begin PBXFileReference section */
 		143E2D9229EF07D80060962F /* win noise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "win noise.mp3"; sourceTree = SOURCE_ROOT; };
-		143E2D9329EF07D80060962F /* sound effect #1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound effect #1.mp3"; sourceTree = SOURCE_ROOT; };
 		143E2D9429EF07D80060962F /* lose noise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "lose noise.mp3"; sourceTree = SOURCE_ROOT; };
 		147B0A3529E7260700C62ECF /* EndScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
 		147B0A3729E7261B00C62ECF /* EndScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EndScene.sks; sourceTree = "<group>"; };
@@ -41,10 +45,19 @@
 		1497EDDB29C0F01F008F78DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1497EDDD29C0F022008F78DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1497EDE029C0F022008F78DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4B21BABA29F46A3B00687386 /* sound effect #1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "sound effect #1.aiff"; sourceTree = "<group>"; };
+		4BA671A029F16A3900E4CA2C /* menu sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "menu sound.mp3"; sourceTree = "<group>"; };
+		4BA671A229F16E6600E4CA2C /* Spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Spark.sks; sourceTree = "<group>"; };
+		4BC946C729F84E690099B55B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4BC946C829F9C5F40099B55B /* LogoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LogoScene.sks; sourceTree = "<group>"; };
+		4BC946CC29F9C6420099B55B /* LogoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoScene.swift; sourceTree = "<group>"; };
+		5193FF4F148D645D9348D2F4 /* Pods-CountryballDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountryballDrop.release.xcconfig"; path = "Target Support Files/Pods-CountryballDrop/Pods-CountryballDrop.release.xcconfig"; sourceTree = "<group>"; };
+		950879976F7D05C0E70B117F /* Pods_CountryballDrop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CountryballDrop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA07335629EDC377001608B2 /* boom.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = boom.aiff; sourceTree = "<group>"; };
 		CA43227229E9CAC600B178E1 /* WelcomeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WelcomeScene.sks; sourceTree = "<group>"; };
 		CA43227629E9CB4600B178E1 /* WelcomeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScene.swift; sourceTree = "<group>"; };
 		CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kazooMusic.mp3; sourceTree = "<group>"; };
+		F7CC99D37E322B5E0382BCBD /* Pods-CountryballDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountryballDrop.debug.xcconfig"; path = "Target Support Files/Pods-CountryballDrop/Pods-CountryballDrop.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B36E2AF53AB2D5F07F65B5C0 /* Pods_CountryballDrop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +77,8 @@
 			children = (
 				1497EDCF29C0F01F008F78DC /* CountryballDrop */,
 				1497EDCE29C0F01F008F78DC /* Products */,
+				F87B1D137BE74A0330BFD82B /* Pods */,
+				7F4C6CD41459A7681D353B0F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,11 +93,14 @@
 		1497EDCF29C0F01F008F78DC /* CountryballDrop */ = {
 			isa = PBXGroup;
 			children = (
+				4BC946C729F84E690099B55B /* Info.plist */,
 				1497EDD029C0F01F008F78DC /* AppDelegate.swift */,
-				1497EDD229C0F01F008F78DC /* GameScene.sks */,
-				1497EDD629C0F01F008F78DC /* GameScene.swift */,
+				4BC946C829F9C5F40099B55B /* LogoScene.sks */,
+				4BC946CC29F9C6420099B55B /* LogoScene.swift */,
 				CA43227229E9CAC600B178E1 /* WelcomeScene.sks */,
 				CA43227629E9CB4600B178E1 /* WelcomeScene.swift */,
+				1497EDD229C0F01F008F78DC /* GameScene.sks */,
+				1497EDD629C0F01F008F78DC /* GameScene.swift */,
 				147B0A3729E7261B00C62ECF /* EndScene.sks */,
 				147B0A3529E7260700C62ECF /* EndScene.swift */,
 				149089C129CE0C8300D64012 /* Countryball.swift */,
@@ -89,13 +108,32 @@
 				1497EDDA29C0F01F008F78DC /* Main.storyboard */,
 				1497EDDD29C0F022008F78DC /* Assets.xcassets */,
 				1497EDDF29C0F022008F78DC /* LaunchScreen.storyboard */,
+				4BA671A229F16E6600E4CA2C /* Spark.sks */,
 				CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */,
 				CA07335629EDC377001608B2 /* boom.aiff */,
 				143E2D9429EF07D80060962F /* lose noise.mp3 */,
-				143E2D9329EF07D80060962F /* sound effect #1.mp3 */,
 				143E2D9229EF07D80060962F /* win noise.mp3 */,
+				4BA671A029F16A3900E4CA2C /* menu sound.mp3 */,
+				4B21BABA29F46A3B00687386 /* sound effect #1.aiff */,
 			);
 			path = CountryballDrop;
+			sourceTree = "<group>";
+		};
+		7F4C6CD41459A7681D353B0F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				950879976F7D05C0E70B117F /* Pods_CountryballDrop.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F87B1D137BE74A0330BFD82B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F7CC99D37E322B5E0382BCBD /* Pods-CountryballDrop.debug.xcconfig */,
+				5193FF4F148D645D9348D2F4 /* Pods-CountryballDrop.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,9 +143,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1497EDE429C0F022008F78DC /* Build configuration list for PBXNativeTarget "CountryballDrop" */;
 			buildPhases = (
+				C63607C7810BDFD123A30F0F /* [CP] Check Pods Manifest.lock */,
 				1497EDC929C0F01F008F78DC /* Sources */,
 				1497EDCA29C0F01F008F78DC /* Frameworks */,
 				1497EDCB29C0F01F008F78DC /* Resources */,
+				59ED1FCA3387EEA860A790C7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -157,26 +197,72 @@
 			buildActionMask = 2147483647;
 			files = (
 				143E2D9529EF07D80060962F /* win noise.mp3 in Resources */,
-				143E2D9629EF07D80060962F /* sound effect #1.mp3 in Resources */,
 				1497EDDC29C0F01F008F78DC /* Main.storyboard in Resources */,
 				143E2D9729EF07D80060962F /* lose noise.mp3 in Resources */,
+				4BC946C929F9C5F40099B55B /* LogoScene.sks in Resources */,
 				1497EDD329C0F01F008F78DC /* GameScene.sks in Resources */,
 				CA07335729EDC377001608B2 /* boom.aiff in Resources */,
+				4B21BABB29F46A3B00687386 /* sound effect #1.aiff in Resources */,
 				1497EDDE29C0F022008F78DC /* Assets.xcassets in Resources */,
 				1497EDE129C0F022008F78DC /* LaunchScreen.storyboard in Resources */,
 				147B0A3829E7261B00C62ECF /* EndScene.sks in Resources */,
 				CA43227329E9CAC600B178E1 /* WelcomeScene.sks in Resources */,
+				4BA671A129F16A3900E4CA2C /* menu sound.mp3 in Resources */,
+				4BA671A329F16E6600E4CA2C /* Spark.sks in Resources */,
 				CA9EE82929E876CA00F91B89 /* kazooMusic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		59ED1FCA3387EEA860A790C7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CountryballDrop/Pods-CountryballDrop-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CountryballDrop/Pods-CountryballDrop-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CountryballDrop/Pods-CountryballDrop-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C63607C7810BDFD123A30F0F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CountryballDrop-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1497EDC929C0F01F008F78DC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BC946CD29F9C6420099B55B /* LogoScene.swift in Sources */,
 				1497EDD729C0F01F008F78DC /* GameScene.swift in Sources */,
 				1497EDD929C0F01F008F78DC /* GameViewController.swift in Sources */,
 				1497EDD129C0F01F008F78DC /* AppDelegate.swift in Sources */,
@@ -258,7 +344,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -312,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -324,19 +410,24 @@
 		};
 		1497EDE529C0F022008F78DC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F7CC99D37E322B5E0382BCBD /* Pods-CountryballDrop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V6H7MAVTM9;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CountryballDrop/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CBDrop;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -344,27 +435,36 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kayshov.chirica.CountryballDrop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		1497EDE629C0F022008F78DC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5193FF4F148D645D9348D2F4 /* Pods-CountryballDrop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V6H7MAVTM9;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CountryballDrop/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CBDrop;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -372,9 +472,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kayshov.chirica.CountryballDrop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
