@@ -29,9 +29,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var spawnHeight = 0.85
-    var maxHeight = 0.8
-    var warningHeight = 0.6
-    var balls = [Countryball]()
+    var maxHeight = 0.65
+    var warningHeight = 0.45
+    //var balls = [Countryball]()
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
                  "poland", "germany", "ukraine", "russia", "world"]
     var inMenu = false
@@ -161,7 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         timerLabel = SKLabelNode(fontNamed: "American Typewriter")
         timerLabel.text = "Score: 0"
         timerLabel.horizontalAlignmentMode = .center
-        timerLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.923)
+        timerLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.921)
         self.timerLabel.fontSize = 20
         self.addChild(timerLabel)
         
@@ -172,6 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gameVC.banner.backgroundColor = UIColor(red: 255/255, green: 210/255, blue: 79/255, alpha: 1)
             gameVC.banner.isAutoloadEnabled = true
             gameVC.banner.isHidden = false
+            
         }
     }
     
@@ -184,13 +185,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if objects.contains (muteButton) {
                 return
             }
-
-
+            
+            
             //MARK: Touching Sound Effects Button
             if objects.contains (muteSoundEffectsButton) {
                 return
             }
-
+            
             if objects.contains(nameButton) {
                 return
             }
@@ -211,7 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     cb.ballNode.name = "ball"
                     cb.name = "ball"
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                   DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         [unowned self] in
                         self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
                     }
@@ -278,14 +279,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
-
+    
     
     func didBegin(_ contact: SKPhysicsContact) {
         //MARK: Collisions
         if contact.bodyA.node?.name == "ball" && (contact.bodyB.node?.name == "bottom" || contact.bodyB.node?.name == "ball") {
             let cb = contact.bodyA.node! as! Countryball
             cb.dropped = true
-      
+            
             if showNames && !cb.nameShown {
                 showName(cb: cb)
             }
@@ -321,8 +322,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 cb1.dropped = true
                 
                 /*if showNames && !cb1.nameShown {
-                    showName(cb: cb1)
-                }*/
+                 showName(cb: cb1)
+                 }*/
                 
                 cb1.nameShown = true
                 collisionBetween(cb: cb, object: contact.bodyA.node!)
@@ -345,6 +346,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 } else {
                     if cBall.dropped {
+                        //TODO: Remove all nodes from parent
+                        
                         let scene = SKScene(fileNamed: "EndScene")! as! EndScene
                         scene.playSoundEffects = playSoundEffects
                         scene.muted = muted
@@ -367,9 +370,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func collisionBetween(cb: Countryball?, object: SKNode?) {
-        if playSoundEffects {
-            feedbackGen.notificationOccurred(.success)
-        }
+        /*if playSoundEffects {
+         feedbackGen.notificationOccurred(.success)
+         }*/
         
         if object?.name == "ball" && cb?.name == "ball" {
             let cb2 = object as! Countryball
@@ -382,19 +385,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 destroyBall(ball: cb!)
                 destroyBall(ball: cb2)
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                    [unowned self] in
-                    
-                    combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
-                    
-                    if playSoundEffects {
-                        soundEffects.run(SKAction.play())
-                    }
-                    /*if showNames && !cb2.nameShown {
-                        showName(cb: cb2)
-                        cb2.nameShown = true
-                    }*/
+                /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                 [unowned self] in*/
+                
+                combineCB(cb1: cb!, cb2: cb2, at: CGPoint(x: newX, y: newY))
+                
+                if playSoundEffects {
+                    soundEffects.run(SKAction.play())
                 }
+                /*if showNames && !cb2.nameShown {
+                 showName(cb: cb2)
+                 cb2.nameShown = true
+                 }*/
+                //}
                 
             }
         }
@@ -426,10 +429,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if let fireParticles = SKEmitterNode(fileNamed: "Spark") {
                     fireParticles.position = newBall.position
-                        fireParticles.name = "fireParticles"
-                        addChild(fireParticles)
+                    fireParticles.name = "fireParticles"
+                    addChild(fireParticles)
                 }
-            
+                
                 newBall.dropped = true
                 
                 let scene = SKScene(fileNamed: "EndScene")! as! EndScene
@@ -466,19 +469,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             cbName = cb.ballName.capitalized
         }
         
-        let name = SKLabelNode(fontNamed: "American Typewriter")
+        var name = SKLabelNode(fontNamed: "American Typewriter")
         name.text = cbName
         name.position = CGPoint(x: cb.position.x, y: cb.position.y + cb.ballSize*1.05)
         name.zPosition = 5
         addChild(name)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            [unowned self] in
             name.removeFromParent()
+            //name = nil
         }
     }
     
-    func destroyBall(ball: SKNode?) {
-        ball?.removeFromParent()
+    /*func destroyBall(ball: SKNode) {
+        ball.removeFromParent()
+        //ball = nil
+    }*/
+    
+    func destroyBall(ball: Countryball) {
+        //ball.ballNode.removeFromParent()
+        ball.removeFromParent()
+        //ball = nil
     }
     
     func spawnTopCB(at position: CGPoint) {
@@ -515,6 +527,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for node in self.children {
             if node.name == "ball" || node.name == "ready" {
                 node.removeFromParent()
+                //parent?.removeChildren(in: <#T##[SKNode]#>)
             }
         }
         
@@ -538,6 +551,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func mainMenu(action: UIAlertAction!) {
+        //self.removeAllChildren()
         let scene = SKScene(fileNamed: "WelcomeScene")! as! WelcomeScene
         scene.muted = muted
         scene.showNames = showNames

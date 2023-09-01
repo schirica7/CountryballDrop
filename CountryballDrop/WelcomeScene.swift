@@ -106,7 +106,7 @@ class WelcomeScene: SKScene {
                     scene.showNames = showNames
                     scene.playSoundEffects = playSoundEffects
                     
-                    let transition = SKTransition.crossFade(withDuration: 2)
+                    let transition = SKTransition.crossFade(withDuration: 0.5)
                     self.view?.presentScene(scene, transition: transition)
                 }
             }

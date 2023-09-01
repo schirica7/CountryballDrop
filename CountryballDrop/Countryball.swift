@@ -8,13 +8,10 @@
 import UIKit
 import SpriteKit
 
+//TODO: Lay framework for non-European countryballs
 class Countryball: SKSpriteNode {
-    var ballNode: SKSpriteNode!
-    var dropped = false {
-        didSet {
-            print("\(ballName) Dropped: \(dropped)")
-        }
-    }
+    weak var ballNode: SKSpriteNode!
+    var dropped = false
     var ballName = ""
     var ballSize: CGFloat = 0.0
     var nameShown = false
@@ -23,10 +20,12 @@ class Countryball: SKSpriteNode {
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
         "poland", "germany", "ukraine", "russia", "world"]
     
+
     func spawn(at position: CGPoint, named name: String) {
         self.position = position
         //var name = cbName()
         
+        //ballNode = SKSpriteNode()
         ballNode = SKSpriteNode(imageNamed: name)
         ballSize = ballNode.size.width
         ballName = name
