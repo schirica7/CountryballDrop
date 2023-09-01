@@ -26,7 +26,6 @@ class GameViewController: UIViewController {
         banner.rootViewController = self
         banner.load(GADRequest())
         banner.isHidden = true
-        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [GADSimulatorID]
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -60,6 +59,5 @@ class GameViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         banner.frame = CGRect(x: view.frame.size.width * 0.1, y: view.frame.size.height * 0.9175, width: view.frame.size.width * 0.8, height: view.frame.size.height * 0.055)
-    
     }
 }

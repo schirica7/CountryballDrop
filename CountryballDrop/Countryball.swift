@@ -8,10 +8,18 @@
 import UIKit
 import SpriteKit
 
+
 //TODO: Lay framework for non-European countryballs
-class Countryball: SKSpriteNode {
-    weak var ballNode: SKSpriteNode!
-    var dropped = false
+
+class Countryball {
+    var ballNode: SKSpriteNode? = SKSpriteNode()
+    var dropped = false {
+        didSet {
+            print("\(ballName) Dropped: \(dropped)")
+        }
+    }
+    
+    var status = ""
     var ballName = ""
     var ballSize: CGFloat = 0.0
     var nameShown = false
@@ -20,17 +28,20 @@ class Countryball: SKSpriteNode {
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
         "poland", "germany", "ukraine", "russia", "world"]
     
-
     func spawn(at position: CGPoint, named name: String) {
-        self.position = position
-        //var name = cbName()
-        
-        //ballNode = SKSpriteNode()
         ballNode = SKSpriteNode(imageNamed: name)
-        ballSize = ballNode.size.width
+        ballNode!.position = position
+        ballSize = ballNode!.size.width
+        ballNode!.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(ballSize)/2.0)
+        ballNode!.physicsBody!.isDynamic = false
+        ballNode!.physicsBody!.contactTestBitMask = ballNode!.physicsBody!.collisionBitMask
         ballName = name
         
-        addChild(ballNode)
+        //addChild(ballNode)
+    }
+    
+    deinit {
+        print("Countryball deallocated")
     }
     
     func newCbName() -> String {
