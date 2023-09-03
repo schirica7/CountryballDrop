@@ -87,7 +87,7 @@ class WelcomeScene: SKScene {
         if let vc = self.view?.window?.rootViewController {
             let gameVC = vc as! GameViewController
             gameVC.banner.isAutoloadEnabled = true
-            gameVC.banner.isHidden = true
+            gameVC.banner.isHidden = false
         }
         
     }

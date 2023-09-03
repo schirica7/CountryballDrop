@@ -12,20 +12,24 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     let banner: GADBannerView = {
-        let bannerView = GADBannerView()
-        bannerView.adUnitID = "ca-app-pub-6080953864782497/4087148077"
-        return bannerView
+        let banner = GADBannerView()
+        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        banner.load(GADRequest())
+        return banner
     }()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(banner)
+
+        
         banner.backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         banner.rootViewController = self
-        banner.load(GADRequest())
-        banner.isHidden = true
+        view.addSubview(banner)
+        //banner.load(GADRequest())
+        //banner.isHidden = true
+        //
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -42,6 +46,7 @@ class GameViewController: UIViewController {
             view.showsFPS = false
             view.showsNodeCount = false
         }
+        
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

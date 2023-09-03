@@ -5,7 +5,7 @@
 //  Created by Stefan Chirica on 4/26/23.
 //
 
-
+import UIKit
 import SpriteKit
 import GameplayKit
 
@@ -18,7 +18,7 @@ class LogoScene: SKScene {
         logo.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.5)
         addChild(logo)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             [unowned self] in
             let scene = SKScene(fileNamed: "WelcomeScene")! as! WelcomeScene
             let transition = SKTransition.crossFade(withDuration: 2)
