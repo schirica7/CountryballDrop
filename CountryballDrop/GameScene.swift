@@ -137,12 +137,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             soundEffects.run(SKAction.changeVolume(to: Float(0.30), duration: 0))
             addChild(soundEffects)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                [unowned self] in
-                soundEffects.removeFromParent()
-            }
-            //soundEffects.removeFromParent()
-            
             if mutedSoundEffects {
                 muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
                 playSoundEffects = false
@@ -306,13 +300,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 cb.nameShown = true
                 
+                if playSoundEffects && !cb.hapticsActivated {
+                    feedbackGen.notificationOccurred(.success)
+                    cb.hapticsActivated = true
+                }
+                
+                
                 if contact.bodyB.node?.name == "ball" {
                     if let cb1 = getCountryball(node: contact.bodyB.node!) {
                         
                         cb1.dropped = true
+                        //cb1.hapticsActivated = true
                         
                         if showNames && !cb1.nameShown {
                             showName(cb: cb1)
+                        }
+                        
+                        if playSoundEffects && !cb1.hapticsActivated {
+                            feedbackGen.notificationOccurred(.success)
+                            cb1.hapticsActivated = true
                         }
                         
                         cb1.nameShown = true
@@ -332,12 +338,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if showNames && !cb.nameShown {
                     showName(cb: cb)
                 }
-                
+        
                 cb.nameShown = true
+        
+                if playSoundEffects && !cb.hapticsActivated {
+                    feedbackGen.notificationOccurred(.success)
+                    cb.hapticsActivated = true
+                }
                 
                 if contact.bodyA.node?.name == "ball" {
                     if let cb1 = getCountryball(node: contact.bodyA.node!) {
                         cb1.dropped = true
+                        //cb1.hapticsActivated = true
+                        if playSoundEffects && !cb1.hapticsActivated {
+                            feedbackGen.notificationOccurred(.success)
+                            cb1.hapticsActivated = true
+                        }
                         
                         if showNames && !cb1.nameShown {
                             showName(cb: cb1)
@@ -395,9 +411,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func collisionBetween(cb: Countryball?, object: SKNode?) {
-        /*if playSoundEffects {
-         feedbackGen.notificationOccurred(.success)
-         }*/
         
         if let ballNode  = cb?.ballNode  {
             if object?.name == "ball" && ballNode.name == "ball" {
@@ -421,17 +434,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             }
                         }
                         
-                        //
                         //MARK: Play sound effect
-                        /*if playSoundEffects {
-                         soundEffects.run(SKAction.play())
-                         }*/
+                        if playSoundEffects {
+                            soundEffects.run(SKAction.play())
+                        }
                         
                         
-                        /*if showNames && !cb2.nameShown {
-                         showName(cb: cb2)
-                         cb2.nameShown = true
-                         }*/
+                        if showNames && !cb2.nameShown {
+                            showName(cb: cb2)
+                            cb2.nameShown = true
+                        }
                         
                     }
                 }
@@ -461,6 +473,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if showNames && !newBall.nameShown {
                     showName(cb: newBall)
                     newBall.nameShown = true
+                }
+                
+                if playSoundEffects && !newBall.hapticsActivated {
+                    feedbackGen.notificationOccurred(.success)
+                    newBall.hapticsActivated = true
                 }
                 
                 //MARK: Emitter node
@@ -517,7 +534,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         name!.text = cbName
         
         if let ballNode = cb.ballNode {
-            name!.position = CGPoint(x: ballNode.position.x, y: ballNode.position.y + cb.ballSize*1.05)
+            if ballNode.position.x < name!.frame.size.width/2 {
+                name!.position = CGPoint(x: name!.frame.size.width/2, y: ballNode.position.y + cb.ballSize*1.05)
+            } else if ballNode.position.x > self.size.width - name!.frame.size.width/2 {
+                name!.position = CGPoint(x: self.size.width - name!.frame.size.width/2, y: ballNode.position.y + cb.ballSize*1.05)
+            } else {
+                name!.position = CGPoint(x: ballNode.position.x, y: ballNode.position.y + cb.ballSize*1.05)
+            }
         }
         name!.zPosition = 5
         addChild(name!)

@@ -25,6 +25,7 @@ class Countryball {
     var ballName = ""
     var ballSize: CGFloat = 0.0
     var nameShown = false
+    var hapticsActivated = false
     
     func spawn(at position: CGPoint, named name: String) {
         ballNode = SKSpriteNode(imageNamed: name)

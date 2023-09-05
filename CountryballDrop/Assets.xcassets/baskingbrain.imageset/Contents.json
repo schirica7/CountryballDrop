@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "baskingball.png",
+      "filename" : "baskingbrain.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "baskingball@2x.png",
+      "filename" : "baskingbrain@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "baskingball@3x.png",
+      "filename" : "baskingbrain@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

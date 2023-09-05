@@ -13,7 +13,12 @@ import GameplayKit
 class GameViewController: UIViewController {
     let banner: GADBannerView = {
         let banner = GADBannerView()
-        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        
+        //Test ads
+        //banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        
+        //Real ads
+        banner.adUnitID = "ca-app-pub-6080953864782497/4087148077"
         banner.load(GADRequest())
         return banner
     }()
@@ -21,15 +26,10 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-        
         banner.backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         banner.rootViewController = self
         view.addSubview(banner)
-        //banner.load(GADRequest())
-        //banner.isHidden = true
-        //
+        banner.isHidden = true
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
