@@ -183,50 +183,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            let location = touch.location(in: self)
-            let objects = nodes(at: location)
-            
-            //MARK: Touching Mute Button
-            if objects.contains (muteButton) {
-                return
-            }
-            
-            
-            //MARK: Touching Sound Effects Button
-            if objects.contains (muteSoundEffectsButton) {
-                return
-            }
-            
-            if objects.contains(nameButton) {
-                return
-            }
-            
-            //MARK: Touching Reset Button
-            //Reset button removes all balls, starts music back at the beginning, and carries over settings from previous game
-            if objects.contains (resetButton) {
-                //TODO: Pause timer when alert controller is showing, restart if hit no
-                return
-            }
-            
-            for node in children {
-                if node.name == "ready" {
-                    node.position = CGPoint(x: location.x, y: node.position.y)
-                    node.physicsBody!.isDynamic = true
-                    node.physicsBody!.restitution = 0.005
-                    node.name = "ball"
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        [unowned self] in
-                        self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
-                    }
-                    
-                }
-            }
-        }
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
@@ -286,6 +242,104 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let location = touch.location(in: self)
+            let objects = nodes(at: location)
+            
+            //MARK: Touching Mute Button
+            if objects.contains (muteButton) {
+                return
+            }
+            
+            //MARK: Touching Sound Effects Button
+            if objects.contains (muteSoundEffectsButton) {
+                return
+            }
+            
+            if objects.contains(nameButton) {
+                return
+            }
+            
+            //MARK: Touching Reset Button
+            //Reset button removes all balls, starts music back at the beginning, and carries over settings from previous game
+            if objects.contains (resetButton) {
+                //TODO: Pause timer when alert controller is showing, restart if hit no
+                return
+            }
+            
+            for node in children {
+                if node.name == "ready" {
+                    //node.position = CGPoint(x: location.x, y: node.position.y)
+                    muteButton.isHidden = false
+                    muteButton.isUserInteractionEnabled = true
+                    
+                    muteSoundEffectsButton.isHidden = false
+                    muteSoundEffectsButton.isUserInteractionEnabled = true
+                    
+                    nameButton.isHidden = false
+                    nameButton.isUserInteractionEnabled = true
+                    
+                    resetButton.isHidden = false
+                    resetButton.isUserInteractionEnabled =  true
+                    
+                    node.position = CGPoint(x: location.x, y: node.position.y)
+                    if node.position.x < node.frame.size.width/2 {
+                        node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
+                    }
+                    
+                    if node.position.x > (self.size.width - node.frame.size.width/2) {
+                        node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
+                    }
+                    
+                    node.physicsBody!.isDynamic = true
+                    node.physicsBody!.restitution = 0.005
+                    node.name = "ball"
+                    
+                    print(self.size.width)
+                    print(node.position.x)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                        [unowned self] in
+                        self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let location = touch.location(in: self)
+            let objects = nodes(at: location)
+            
+            muteButton.isHidden = true
+            muteButton.isUserInteractionEnabled =  false
+            
+            muteSoundEffectsButton.isHidden = true
+            muteSoundEffectsButton.isUserInteractionEnabled =  false
+            
+            nameButton.isHidden = true
+            nameButton.isUserInteractionEnabled =  false
+            
+            resetButton.isHidden = true
+            resetButton.isUserInteractionEnabled =  false
+            
+            for node in children {
+                if node.name == "ready" {
+                    node.position = CGPoint(x: location.x, y: node.position.y)
+                    if node.position.x < node.frame.size.width/2 {
+                        node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
+                    }
+                    
+                    if node.position.x > (self.size.width - node.frame.size.width/2) {
+                        node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
+                    }
+                }
+            }
+        }
+    }
     
     func didBegin(_ contact: SKPhysicsContact) {
         //MARK: Collisions
@@ -630,6 +684,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic.run(SKAction.stop())
+            backgroundMusic.removeFromParent()
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
             addChild(backgroundMusic)
