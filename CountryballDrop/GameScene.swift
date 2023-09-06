@@ -267,18 +267,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 && !objects.contains(nameButton) {
                 for node in children {
                     if node.name == "ready" {
+                        node.position = CGPoint(x: location.x, y: node.position.y)
+                        if node.position.x < node.frame.size.width/2 {
+                            node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
+                        }
+                        
+                        if node.position.x > (self.size.width - node.frame.size.width/2) {
+                            node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
+                        }
                         dropCB(node: node)
                     }
                 }
             } else if objects.contains(muteSoundEffectsButton) {
                 for node in children {
                     if node.name == "ready" && objects.contains(node){
+                        node.position = CGPoint(x: location.x, y: node.position.y)
+                        if node.position.x < node.frame.size.width/2 {
+                            node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
+                        }
+                        
+                        if node.position.x > (self.size.width - node.frame.size.width/2) {
+                            node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
+                        }
                         dropCB(node: node)
                     }
                 }
             } else if objects.contains(resetButton) {
                 for node in children {
                     if node.name == "ready" && objects.contains(node) {
+                        node.position = CGPoint(x: location.x, y: node.position.y)
+                        if node.position.x < node.frame.size.width/2 {
+                            node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
+                        }
+                        
+                        if node.position.x > (self.size.width - node.frame.size.width/2) {
+                            node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
+                        }
                         dropCB(node: node)
                     }
                 }
@@ -622,14 +646,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func dropCB(node: SKNode) {
-        node.position = CGPoint(x: location.x, y: node.position.y)
-        if node.position.x < node.frame.size.width/2 {
-            node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
-        }
-        
-        if node.position.x > (self.size.width - node.frame.size.width/2) {
-            node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
-        }
         
         node.physicsBody!.isDynamic = true
         node.physicsBody!.restitution = 0.005
