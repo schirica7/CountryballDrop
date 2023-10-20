@@ -653,7 +653,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
             [unowned self] in
-            self.spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
+            self.spawnTopCB(at: CGPoint(x: self.size.width * 0.5, y: self.size.height * spawnHeight))
             
         }
         return
