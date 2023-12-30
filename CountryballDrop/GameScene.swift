@@ -8,6 +8,7 @@
 import SpriteKit
 import GameplayKit
 import GoogleMobileAds
+import UserMessagingPlatform
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Variables
@@ -278,32 +279,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         dropCB(node: node)
                     }
                 }
-            } else if objects.contains(muteSoundEffectsButton) {
-                for node in children {
-                    if node.name == "ready" && objects.contains(node){
-                        node.position = CGPoint(x: location.x, y: node.position.y)
-                        if node.position.x < node.frame.size.width/2 {
-                            node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
+            } else {
+                if objects.contains(muteSoundEffectsButton) || objects.contains(resetButton){
+                    for node in children {
+                        if node.name == "ready" && objects.contains(node){
+                            node.position = CGPoint(x: location.x, y: node.position.y)
+                            if node.position.x < node.frame.size.width/2 {
+                                node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
+                            }
+                            
+                            if node.position.x > (self.size.width - node.frame.size.width/2) {
+                                node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
+                            }
+                            dropCB(node: node)
                         }
-                        
-                        if node.position.x > (self.size.width - node.frame.size.width/2) {
-                            node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
-                        }
-                        dropCB(node: node)
-                    }
-                }
-            } else if objects.contains(resetButton) {
-                for node in children {
-                    if node.name == "ready" && objects.contains(node) {
-                        node.position = CGPoint(x: location.x, y: node.position.y)
-                        if node.position.x < node.frame.size.width/2 {
-                            node.position = CGPoint(x: node.frame.size.width/2, y: node.position.y)
-                        }
-                        
-                        if node.position.x > (self.size.width - node.frame.size.width/2) {
-                            node.position = CGPoint(x: (self.size.width - node.frame.size.width/2), y: node.position.y)
-                        }
-                        dropCB(node: node)
                     }
                 }
             }
