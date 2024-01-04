@@ -10,7 +10,6 @@ import UserMessagingPlatform
 import UIKit
 import SpriteKit
 import GameplayKit
-import AVFoundation
 
 class GameViewController: UIViewController {
     var isMobileAdsStartCalled = false;
@@ -28,7 +27,6 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("This is now the latest version")
         //Ad banner
         banner.backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         banner.rootViewController = self
@@ -110,7 +108,7 @@ class GameViewController: UIViewController {
           self.isMobileAdsStartCalled = true
 
           // Initialize the Google Mobile Ads SDK.
-          GADMobileAds.sharedInstance().start()
+          //GADMobileAds.sharedInstance().start()
 
           // TODO: Request an ad.
             self.banner.load(GADRequest())

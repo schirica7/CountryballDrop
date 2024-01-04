@@ -24,5 +24,7 @@ class LogoScene: SKScene {
             let transition = SKTransition.crossFade(withDuration: 2)
             self.view?.presentScene(scene, transition: transition)
          }
+        
+        
     }
 }
