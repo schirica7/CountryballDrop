@@ -9,6 +9,7 @@ import SpriteKit
 import GameplayKit
 import GoogleMobileAds
 import UserMessagingPlatform
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Variables
@@ -34,11 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var maxHeight = 0.8
     var warningHeight = 0.6
     
-    var balls = [Countryball]() {
-        didSet {
-            print("balls: \(balls)")
-        }
-    }
+    var balls = [Countryball]()
     let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
                  "poland", "germany", "ukraine", "russia", "world"]
     
@@ -48,10 +45,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var nameButton = SKSpriteNode()
     
     var backgroundMusic = SKAudioNode()
+    var bgPlayer = AVAudioPlayer()
     var muteButton = SKSpriteNode()
     var muted = false
     
     var soundEffects = SKAudioNode()
+    var sePlayer = AVAudioPlayer()
     var muteSoundEffectsButton = SKSpriteNode()
     var mutedSoundEffects = false
     var playSoundEffects = true
@@ -109,18 +108,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(muteButton)
         
         //MARK: Background music
-        if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
-            backgroundMusic = SKAudioNode(url: musicLocation)
-            backgroundMusic.autoplayLooped = true
-            addChild(backgroundMusic)
-            backgroundMusic.run(SKAction.play())
-            
-            if muted {
-                muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
-            } else {
-                muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+        let soundName = "menu sound"
+        if let asset = NSDataAsset(name: soundName) {
+            do {
+                bgPlayer = try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+                bgPlayer.play()
+                bgPlayer.volume = 0.42
+                bgPlayer.numberOfLoops = -1
+                
+                if muted {
+                    muteButton.texture = SKTexture(imageNamed: "muteMusic")
+                    bgPlayer.volume = 0
+                } else {
+                    muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                    bgPlayer.volume = 0.42
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
             }
         }
         
@@ -202,10 +206,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if muted {
                     muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                    backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                    //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                    bgPlayer.volume = 0
                 } else {
                     muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                    backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                    //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                    bgPlayer.volume = 0.42
                 }
                 return
             }
@@ -213,7 +219,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //MARK: Touching Sound Effects Button
             if objects.contains(muteSoundEffectsButton) {
-                print("hello")
                 mutedSoundEffects = !mutedSoundEffects
                 
                 if mutedSoundEffects {
@@ -504,7 +509,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if name == cb1.ballName && name == cb2.ballName {
                 newCBName = names[index + 1]
                 
-                
                 //TODO: new countryballs
                 let newBall = Countryball()
                 newBall.spawn(at: position, named: newCBName)
@@ -688,20 +692,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
         
-        if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
-            backgroundMusic.run(SKAction.stop())
-            backgroundMusic.removeFromParent()
-            backgroundMusic = SKAudioNode(url: musicLocation)
-            backgroundMusic.autoplayLooped = true
-            addChild(backgroundMusic)
-            backgroundMusic.run(SKAction.play())
+        let soundName = "menu sound"
+        if let asset = NSDataAsset(name: soundName) {
+            do {
+                bgPlayer.stop()
+                bgPlayer = try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+                bgPlayer.play()
+                bgPlayer.volume = 0.42
+                bgPlayer.numberOfLoops = -1
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
             
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                bgPlayer.volume = 0
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                bgPlayer.volume = 0.42
             }
         }
     }
@@ -715,6 +725,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         balls.removeAll()
         
         let scene = SKScene(fileNamed: "WelcomeScene")! as! WelcomeScene
+        bgPlayer.stop()
         scene.muted = muted
         scene.showNames = showNames
         scene.playSoundEffects = playSoundEffects

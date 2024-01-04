@@ -15,12 +15,7 @@ let names = ["vatican", "luxembourg", "netherlands", "ireland", "uk",
 
 class Countryball {
     var ballNode: SKSpriteNode?
-    var dropped = false {
-        didSet {
-            print("\(ballName) Dropped: \(dropped)")
-        }
-    }
-    
+    var dropped = false    
     var status = ""
     var ballName = ""
     var ballSize: CGFloat = 0.0
@@ -39,7 +34,6 @@ class Countryball {
     
     deinit {
         ballNode = nil
-        print("Countryball deallocated")
     }
     
     func newCbName() -> String {

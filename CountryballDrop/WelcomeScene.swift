@@ -6,21 +6,23 @@
 //
 import UIKit
 import SpriteKit
+import AVFoundation
 
 class WelcomeScene: SKScene {
-
     var playButton = SKSpriteNode()
     var backgroundMusic = SKAudioNode()
+    
+    var player = AVAudioPlayer()
     var muteButton = SKSpriteNode()
     var nameButton = SKSpriteNode()
     var muted = false {
         didSet {
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                player.volume = 0
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                player.volume = 0.42
             }
         }
     }
@@ -34,13 +36,11 @@ class WelcomeScene: SKScene {
         }
     }
     var playSoundEffects = true
-    //var vc: UIViewController!
    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         let titleButton = SKSpriteNode(imageNamed: "title")
         titleButton.name = "Title"
-        //titleButton.size = CGSize(width: 400, height: 100)
         titleButton.zPosition = 2
         titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.65)
         addChild(titleButton)
@@ -68,7 +68,7 @@ class WelcomeScene: SKScene {
         }
 
         
-        if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
+        /*if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
             backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
@@ -82,14 +82,50 @@ class WelcomeScene: SKScene {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
                 backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
-        }
-        
+        }*/
         if let vc = self.view?.window?.rootViewController {
             let gameVC = vc as! GameViewController
             gameVC.banner.isAutoloadEnabled = true
-            gameVC.banner.isHidden = true
+            gameVC.banner.isHidden = false
+            
+            //player.delegate = gameVC
         }
         
+        let soundName = "menu sound"
+        if let asset = NSDataAsset(name: soundName) {
+            do {
+                player = try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+                player.play()
+                player.volume = 0.42
+                player.numberOfLoops = -1
+            } catch let error as NSError {
+                print("This is an error")
+                print(error.localizedDescription)
+            }
+        }
+        
+//        do {
+//            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [.allowBluetooth])
+//            try AVAudioSession.sharedInstance().setActive(true)
+//            
+//            NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+//        } catch {
+//            // Handle the error
+//            print("Something happened")
+//        }
+
+        
+    }
+    
+    override func willMove(from: SKView) {
+        // Pause your audio playback
+        print("Your mom")
+        player.pause()
+    }
+
+    override func sceneDidLoad() {
+        // Resume your audio playback
+        player.play()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -97,11 +133,19 @@ class WelcomeScene: SKScene {
             let location = touch.location(in: self)
             let objects = nodes(at: location)
             if objects.contains(playButton) {
+                playButton.alpha = 0.5
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    [unowned self] in
+                    playButton.alpha = 1
+                }
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     [unowned self] in
                     //TODO: New Scene
-                    
+                    player.stop()
                     let scene = SKScene(fileNamed: "GameScene") as! GameScene
+                    scene.bgPlayer.stop()
                     scene.muted = muted
                     scene.showNames = showNames
                     scene.playSoundEffects = playSoundEffects
@@ -122,5 +166,41 @@ class WelcomeScene: SKScene {
             }
         }
     }
+    
+//    @objc func handleInterruption(_ notification: Notification) {
+//            guard let userInfo = notification.userInfo,
+//                  let interruptionType = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else {
+//                return
+//            }
+//
+//            switch AVAudioSession.InterruptionType(rawValue: interruptionType)! {
+//            case .began:
+//                // Handle interruption began
+//                print("Audio interrupted")
+//                player.pause()
+//            case .ended:
+//                player.play()
+//                do {
+//                    try AVAudioSession.sharedInstance().setActive(true)
+//                } catch {
+//                    // Handle the error
+//                    print("Audio session error")
+//                }
+//            @unknown default:
+//                print("Unknown audio session error")
+//            }
+//        }
+    
+    func pauseAudio() {
+        player.pause()
+    }
+    
+    func playAudio() {
+        player.play()
+    }
+    
+//    deinit {
+//        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+//    }
 }
 
