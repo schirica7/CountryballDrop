@@ -10,7 +10,7 @@ import SpriteKit
 class WelcomeScene: SKScene {
 
     var playButton = SKSpriteNode()
-    //var backgroundMusic = SKAudioNode()
+    var backgroundMusic = SKAudioNode()
     var muteButton = SKSpriteNode()
     var nameButton = SKSpriteNode()
     var muted = false {
@@ -40,7 +40,6 @@ class WelcomeScene: SKScene {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         let titleButton = SKSpriteNode(imageNamed: "title")
         titleButton.name = "Title"
-        //titleButton.size = CGSize(width: 400, height: 100)
         titleButton.zPosition = 2
         titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.65)
         addChild(titleButton)
@@ -69,18 +68,18 @@ class WelcomeScene: SKScene {
 
         
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
-//            backgroundMusic = SKAudioNode(url: musicLocation)
-//            backgroundMusic.autoplayLooped = true
-//            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-//            addChild(backgroundMusic)
-//            backgroundMusic.run(SKAction.play())
+            backgroundMusic = SKAudioNode(url: musicLocation)
+            backgroundMusic.autoplayLooped = true
+            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+            addChild(backgroundMusic)
+            backgroundMusic.run(SKAction.play())
             
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
         }
         
@@ -96,7 +95,14 @@ class WelcomeScene: SKScene {
         if let touch = touches.first {
             let location = touch.location(in: self)
             let objects = nodes(at: location)
+            
             if objects.contains(playButton) {
+                playButton.alpha = 0.5
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    [unowned self] in
+                    self.playButton.alpha = 1
+                }
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     [unowned self] in
                     
