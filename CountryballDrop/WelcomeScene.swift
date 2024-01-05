@@ -10,17 +10,17 @@ import SpriteKit
 class WelcomeScene: SKScene {
 
     var playButton = SKSpriteNode()
-    var backgroundMusic = SKAudioNode()
+    //var backgroundMusic = SKAudioNode()
     var muteButton = SKSpriteNode()
     var nameButton = SKSpriteNode()
     var muted = false {
         didSet {
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
         }
     }
@@ -69,18 +69,18 @@ class WelcomeScene: SKScene {
 
         
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
-            backgroundMusic = SKAudioNode(url: musicLocation)
-            backgroundMusic.autoplayLooped = true
-            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-            addChild(backgroundMusic)
-            backgroundMusic.run(SKAction.play())
+//            backgroundMusic = SKAudioNode(url: musicLocation)
+//            backgroundMusic.autoplayLooped = true
+//            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+//            addChild(backgroundMusic)
+//            backgroundMusic.run(SKAction.play())
             
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
         }
         
@@ -99,7 +99,6 @@ class WelcomeScene: SKScene {
             if objects.contains(playButton) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     [unowned self] in
-                    //TODO: New Scene
                     
                     let scene = SKScene(fileNamed: "GameScene") as! GameScene
                     scene.muted = muted

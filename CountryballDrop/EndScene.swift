@@ -14,8 +14,8 @@ class EndScene: SKScene {
     var playSoundEffects = false
     var muted = false
     var showNames = false
-    var loseSoundEffects = SKAudioNode()
-    var winSoundEffects = SKAudioNode()
+    //var loseSoundEffects = SKAudioNode()
+    //var winSoundEffects = SKAudioNode()
     var gameOver = SKSpriteNode()
     var playAgain = SKLabelNode()
     var menu = SKLabelNode()
@@ -88,24 +88,24 @@ class EndScene: SKScene {
         addChild(menu)
         
         if let musicSoundEffectsLocation = Bundle.main.url(forResource: "lose noise", withExtension: ".mp3") {
-            loseSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
-            loseSoundEffects.autoplayLooped = false
-            loseSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-            addChild(loseSoundEffects)
+//            loseSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+//            loseSoundEffects.autoplayLooped = false
+//            loseSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+//            addChild(loseSoundEffects)
         }
         
         if let musicSoundEffectsLocation = Bundle.main.url(forResource: "win noise", withExtension: ".mp3") {
-            winSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
-            winSoundEffects.autoplayLooped = false
-            winSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-            addChild(winSoundEffects)
+//            winSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+//            winSoundEffects.autoplayLooped = false
+//            winSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+//            addChild(winSoundEffects)
         }
         
         if soundEffects {
             if win {
-                winSoundEffects.run(SKAction.play())
+                //winSoundEffects.run(SKAction.play())
             } else {
-                loseSoundEffects.run(SKAction.play())
+                //loseSoundEffects.run(SKAction.play())
             }
         }
     }
