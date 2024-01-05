@@ -22,7 +22,7 @@ PODS:
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleUserMessagingPlatform (2.1.0)
+  - GoogleUserMessagingPlatform (2.0.1)
   - GoogleUtilities/AppDelegateSwizzler (7.11.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -49,7 +49,6 @@ PODS:
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
-  - GoogleUserMessagingPlatform
 
 SPEC REPOS:
   trunk:
@@ -63,11 +62,11 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 32fe7836431a06a29f7734ae092b600137c8108d
   GoogleAppMeasurement: 373bcbead1bb6a85be7a64d5d8f96284b762ea9c
-  GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
+  GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
 
-PODFILE CHECKSUM: 220cd629aca69a331343effee55d78b2b3cede6f
+PODFILE CHECKSUM: b3fb73e348dc78b350a566c3318d7b755103f71f
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.12.1

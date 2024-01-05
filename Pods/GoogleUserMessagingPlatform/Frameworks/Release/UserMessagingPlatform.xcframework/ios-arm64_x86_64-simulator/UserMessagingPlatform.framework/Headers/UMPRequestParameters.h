@@ -1,7 +1,7 @@
 #import <UserMessagingPlatform/UMPDebugSettings.h>
 
 /// Parameters sent on updates to user consent info.
-@interface UMPRequestParameters : NSObject <NSCopying>
+@interface UMPRequestParameters : NSObject
 
 /// Indicates whether the user is tagged for under age of consent.
 @property(nonatomic) BOOL tagForUnderAgeOfConsent;
