@@ -26,7 +26,6 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("This is now the latest version")
         //Ad banner
         banner.backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         banner.rootViewController = self
