@@ -6,11 +6,14 @@
 //
 
 import GoogleMobileAds
+import UserMessagingPlatform
 import UIKit
 import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    var isMobileAdsStartCalled = false
+    
     let banner: GADBannerView = {
         let banner = GADBannerView()
         
@@ -19,7 +22,7 @@ class GameViewController: UIViewController {
         
         //Real ads
         banner.adUnitID = "ca-app-pub-6080953864782497/4087148077"
-        banner.load(GADRequest())
+        //banner.load(GADRequest())
         return banner
     }()
     
@@ -33,7 +36,7 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "LogoScene") {
+            if let scene = SKScene(fileNamed: "WelcomeScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .resizeFill
                 

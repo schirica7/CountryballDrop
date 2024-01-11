@@ -9,6 +9,8 @@ import SpriteKit
 
 class WelcomeScene: SKScene {
 
+    var buttonPresses = 0
+    
     var playButton = SKSpriteNode()
     var backgroundMusic = SKAudioNode()
     var muteButton = SKSpriteNode()
@@ -17,10 +19,10 @@ class WelcomeScene: SKScene {
         didSet {
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
         }
     }
@@ -34,7 +36,6 @@ class WelcomeScene: SKScene {
         }
     }
     var playSoundEffects = true
-    //var vc: UIViewController!
    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
@@ -70,8 +71,8 @@ class WelcomeScene: SKScene {
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
-            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
             addChild(backgroundMusic)
+            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
             backgroundMusic.run(SKAction.play())
             
             if muted {
@@ -86,7 +87,7 @@ class WelcomeScene: SKScene {
         if let vc = self.view?.window?.rootViewController {
             let gameVC = vc as! GameViewController
             gameVC.banner.isAutoloadEnabled = true
-            gameVC.banner.isHidden = true
+            gameVC.banner.isHidden = false
         }
         
     }
@@ -96,7 +97,8 @@ class WelcomeScene: SKScene {
             let location = touch.location(in: self)
             let objects = nodes(at: location)
             
-            if objects.contains(playButton) {
+            if objects.contains(playButton) && buttonPresses == 0 {
+                buttonPresses += 1
                 playButton.alpha = 0.5
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     [unowned self] in

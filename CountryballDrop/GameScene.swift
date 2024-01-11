@@ -197,10 +197,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if muted {
                     muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                    //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                    backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
                 } else {
                     muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                    //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                    backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
                 }
                 return
             }
@@ -208,7 +208,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //MARK: Touching Sound Effects Button
             if objects.contains(muteSoundEffectsButton) {
-                print("hello")
                 mutedSoundEffects = !mutedSoundEffects
                 
                 if mutedSoundEffects {
