@@ -8,6 +8,7 @@
 import SpriteKit
 import GameplayKit
 import GoogleMobileAds
+import UserMessagingPlatform
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Variables
@@ -42,11 +43,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var showNames = true
     var nameButton = SKSpriteNode()
     
-    var backgroundMusic = SKAudioNode()
+    //var backgroundMusic = SKAudioNode()
     var muteButton = SKSpriteNode()
     var muted = false
     
-    var soundEffects = SKAudioNode()
+    //var soundEffects = SKAudioNode()
     var muteSoundEffectsButton = SKSpriteNode()
     var mutedSoundEffects = false
     var playSoundEffects = true
@@ -105,17 +106,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //MARK: Background music
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
-            backgroundMusic = SKAudioNode(url: musicLocation)
-            backgroundMusic.autoplayLooped = true
-            addChild(backgroundMusic)
-            backgroundMusic.run(SKAction.play())
+//            backgroundMusic = SKAudioNode(url: musicLocation)
+//            backgroundMusic.autoplayLooped = true
+//            addChild(backgroundMusic)
+//            backgroundMusic.run(SKAction.play())
             
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
         }
         
@@ -128,10 +129,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(muteSoundEffectsButton)
         
         if let musicSoundEffectsLocation = Bundle.main.url(forResource: "sound effect #1", withExtension: ".aiff") {
-            soundEffects = SKAudioNode(url: musicSoundEffectsLocation)
-            soundEffects.autoplayLooped = false
-            soundEffects.run(SKAction.changeVolume(to: Float(0.70), duration: 0))
-            addChild(soundEffects)
+//            soundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+//            soundEffects.autoplayLooped = false
+//            soundEffects.run(SKAction.changeVolume(to: Float(0.70), duration: 0))
+//            addChild(soundEffects)
             
             if mutedSoundEffects {
                 muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
@@ -197,10 +198,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if muted {
                     muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                    backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                    //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
                 } else {
                     muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                    backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                    //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
                 }
                 return
             }
@@ -488,7 +489,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                         //MARK: Play sound effect
                         if playSoundEffects {
-                            soundEffects.run(SKAction.play())
+                            //soundEffects.run(SKAction.play())
                         }
                         
                         
@@ -695,19 +696,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnTopCB(at: CGPoint(x: self.size.width/2, y: self.size.height * spawnHeight))
         
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
-            backgroundMusic.run(SKAction.stop())
-            backgroundMusic.removeFromParent()
-            backgroundMusic = SKAudioNode(url: musicLocation)
-            backgroundMusic.autoplayLooped = true
-            addChild(backgroundMusic)
-            backgroundMusic.run(SKAction.play())
+//            backgroundMusic.run(SKAction.stop())
+//            backgroundMusic.removeFromParent()
+//            backgroundMusic = SKAudioNode(url: musicLocation)
+//            backgroundMusic.autoplayLooped = true
+//            addChild(backgroundMusic)
+//            backgroundMusic.run(SKAction.play())
 //            
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
                 //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
             }
         }
     }
