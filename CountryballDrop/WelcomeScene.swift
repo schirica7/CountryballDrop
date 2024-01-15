@@ -9,12 +9,12 @@ import SpriteKit
 import AVFoundation
 
 class WelcomeScene: SKScene {
-
+    
     var buttonPresses = 0
     
     var playButton = SKSpriteNode()
     //var backgroundMusic = SKAudioNode()
-    var player = AVAudioPlayer()
+    var player: AVAudioPlayer?
     var muteButton = SKSpriteNode()
     var nameButton = SKSpriteNode()
     var muted = false {
@@ -22,11 +22,11 @@ class WelcomeScene: SKScene {
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
                 //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
-                player.volume = 0
+                player?.volume = 0
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
                 //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
-                player.volume = 0.42
+                player?.volume = 0.42
             }
         }
     }
@@ -40,7 +40,7 @@ class WelcomeScene: SKScene {
         }
     }
     var playSoundEffects = true
-   
+    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         let titleButton = SKSpriteNode(imageNamed: "title")
@@ -48,7 +48,7 @@ class WelcomeScene: SKScene {
         titleButton.zPosition = 2
         titleButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.65)
         addChild(titleButton)
-
+        
         playButton = SKSpriteNode(imageNamed: "play")
         playButton.name = "Play"
         playButton.size = CGSize(width: 200, height: 60)
@@ -70,21 +70,25 @@ class WelcomeScene: SKScene {
         } else {
             nameButton.texture = SKTexture(imageNamed: "noNames")
         }
-
         
-        if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
-//            backgroundMusic = SKAudioNode(url: musicLocation)
-//            backgroundMusic.autoplayLooped = true
-//            addChild(backgroundMusic)
-//            backgroundMusic.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-//            backgroundMusic.run(SKAction.play())
-            
-            if muted {
-                muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
-            } else {
-                muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+        
+        let soundName = "menu sound"
+        if let asset = NSDataAsset(name: soundName) {
+            do {
+                player = try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+                player?.play()
+                player?.volume = 0.42
+                player?.numberOfLoops = -1
+                
+                if muted {
+                    muteButton.texture = SKTexture(imageNamed: "muteMusic")
+                    player?.volume = 0
+                } else {
+                    muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
+                    player?.volume = 0.42
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
             }
         }
         
@@ -116,6 +120,8 @@ class WelcomeScene: SKScene {
                     scene.muted = muted
                     scene.showNames = showNames
                     scene.playSoundEffects = playSoundEffects
+                    player?.stop()
+                    player = nil
                     
                     let transition = SKTransition.crossFade(withDuration: 2)
                     self.view?.presentScene(scene, transition: transition)

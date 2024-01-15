@@ -6,7 +6,9 @@
 //
 
 import GoogleMobileAds
+import AVFoundation
 import UIKit
+import SpriteKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,10 +28,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        
+        if let rootViewController = self.window?.rootViewController as? GameViewController {
+                if let skView = rootViewController.view as? SKView {
+                    if let activeScene = skView.scene as? WelcomeScene{
+                        // Access the active scene here and pause the audio
+                        activeScene.player?.pause()
+                    }
+                    
+                    else if let activeScene = skView.scene as? GameScene{
+                        // Access the active scene here and pause the audio
+                        //activeScene.bgPlayer.pause()
+                    }
+                    
+                    else if let activeScene = skView.scene as? EndScene{
+                        
+                    }
+                }
+            }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        if let rootViewController = self.window?.rootViewController as? GameViewController {
+                if let skView = rootViewController.view as? SKView {
+                    if let activeScene = skView.scene as? WelcomeScene{
+                        // Access the active scene here and pause the audio
+                        activeScene.player?.play()
+                    }
+                    
+                     else if let activeScene = skView.scene as? GameScene{
+                        // Access the active scene here and pause the audio
+                        //activeScene.bgPlayer.play()
+                    }
+                }
+            }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

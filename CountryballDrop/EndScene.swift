@@ -7,6 +7,7 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
 class EndScene: SKScene {
 
@@ -14,6 +15,7 @@ class EndScene: SKScene {
     var playSoundEffects = false
     var muted = false
     var showNames = false
+    var player: AVAudioPlayer?
     //var loseSoundEffects = SKAudioNode()
     //var winSoundEffects = SKAudioNode()
     var gameOver = SKSpriteNode()
@@ -87,26 +89,41 @@ class EndScene: SKScene {
         menu.fontName = "American Typewriter"
         addChild(menu)
         
-        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "lose noise", withExtension: ".mp3") {
-//            loseSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
-//            loseSoundEffects.autoplayLooped = false
-//            loseSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-//            addChild(loseSoundEffects)
-        }
-        
-        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "win noise", withExtension: ".mp3") {
-//            winSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
-//            winSoundEffects.autoplayLooped = false
-//            winSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
-//            addChild(winSoundEffects)
+        var soundName: String
+        if win {
+            soundName = "win noise"
+        } else {
+            soundName = "lose noise"
         }
         
         if soundEffects {
-            if win {
-                //winSoundEffects.run(SKAction.play())
-            } else {
-                //loseSoundEffects.run(SKAction.play())
+            if let asset = NSDataAsset(name: soundName) {
+                do {
+                    player = try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+                    player?.play()
+                    player?.volume = 0.42
+                    player?.numberOfLoops = -1
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
             }
+        }
+//        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "lose noise", withExtension: ".mp3") {
+////            loseSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+////            loseSoundEffects.autoplayLooped = false
+////            loseSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+////            addChild(loseSoundEffects)
+//        }
+//        
+//        if let musicSoundEffectsLocation = Bundle.main.url(forResource: "win noise", withExtension: ".mp3") {
+////            winSoundEffects = SKAudioNode(url: musicSoundEffectsLocation)
+////            winSoundEffects.autoplayLooped = false
+////            winSoundEffects.run(SKAction.changeVolume(to: Float(0.42), duration: 0))
+////            addChild(winSoundEffects)
+//        }
+        
+        if soundEffects {
+            player?.play()
         }
     }
 }
