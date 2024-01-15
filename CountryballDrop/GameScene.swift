@@ -171,9 +171,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let asset = NSDataAsset(name: seName) {
             do {
                 sePlayer = try AVAudioPlayer(data: asset.data, fileTypeHint: "aiff")
-                sePlayer?.play()
+                //sePlayer?.play()
                 sePlayer?.volume = 0.42
-                sePlayer?.numberOfLoops = -1
+                sePlayer?.numberOfLoops = 0
                 
                 if mutedSoundEffects {
                     muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
@@ -243,9 +243,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if muted {
                     muteButton.texture = SKTexture(imageNamed: "muteMusic")
                     //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                    bgPlayer?.volume = 0
                 } else {
                     muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
                     //backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                    bgPlayer?.volume = 0.42
                 }
                 return
             }
@@ -533,7 +535,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                         //MARK: Play sound effect
                         if playSoundEffects {
-                            //soundEffects.run(SKAction.play())
+                            sePlayer?.play()
                         }
                         
                         
@@ -770,6 +772,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         balls.removeAll()
         
         let scene = SKScene(fileNamed: "WelcomeScene")! as! WelcomeScene
+        bgPlayer?.stop()
+        bgPlayer = nil
         scene.muted = muted
         scene.showNames = showNames
         scene.playSoundEffects = playSoundEffects
