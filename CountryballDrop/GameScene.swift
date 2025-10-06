@@ -10,7 +10,7 @@ import GameplayKit
 import GoogleMobileAds
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    //MARK: Variables
+    // Variables
     private var label = SKLabelNode()
     var timerLabel = SKLabelNode(text: "Time: 0:00")
     var minutes = 0
@@ -63,7 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        //MARK: Setting up the map
+        //Setting up the map
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
         
@@ -103,7 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         muteButton.zPosition = 2
         addChild(muteButton)
         
-        //MARK: Background music
+        // Background music
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
             backgroundMusic.autoplayLooped = true
@@ -119,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        //MARK: Sound Effects
+        // Sound Effects
         muteSoundEffectsButton = SKSpriteNode(imageNamed: "UnmuteButton")
         muteSoundEffectsButton.name = "muteSoundEffects"
         muteSoundEffectsButton.size = CGSize(width: 60, height: 60)
@@ -142,7 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        //MARK: Country Names
+        // Country Names
         nameButton = SKSpriteNode(texture: SKTexture(imageNamed: "names"))
         nameButton.name = "name"
         nameButton.size = CGSize(width: 60, height: 60)
@@ -190,7 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let touch = touches.first {
             let location = touch.location(in: self)
             let objects = nodes(at: location)
-            //MARK: Touching Mute Button
+            // Touching Mute Button
             
             if objects.contains(muteButton) {
                 muted = !muted
@@ -206,7 +206,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             
-            //MARK: Touching Sound Effects Button
+            // Touching Sound Effects Button
             if objects.contains(muteSoundEffectsButton) {
                 mutedSoundEffects = !mutedSoundEffects
                 
@@ -231,7 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             
-            //MARK: Touching Reset Button
+            // Touching Reset Button
             //Reset button removes all balls, starts music back at the beginning, and carries over settings from previous game
             if objects.contains (resetButton) {
                 //TODO: Pause timer when alert controller is showing, restart if hit no
@@ -401,7 +401,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if contact.bodyA.node?.name == "ball" {
                     if let cb1 = getCountryball(node: contact.bodyA.node!) {
                         cb1.dropped = true
-                        //cb1.hapticsActivated = true
                         if playSoundEffects && !cb1.hapticsActivated {
                             feedbackGen.notificationOccurred(.success)
                             cb1.hapticsActivated = true
@@ -486,7 +485,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             }
                         }
                         
-                        //MARK: Play sound effect
+                        //Play sound effect
                         if playSoundEffects {
                             soundEffects.run(SKAction.play())
                         }
@@ -510,8 +509,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if name == cb1.ballName && name == cb2.ballName {
                 newCBName = names[index + 1]
                 
-                
-                //TODO: new countryballs
                 let newBall = Countryball()
                 newBall.spawn(at: position, named: newCBName)
                 newBall.ballNode!.physicsBody!.isDynamic = true
@@ -701,7 +698,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic.autoplayLooped = true
             addChild(backgroundMusic)
             backgroundMusic.run(SKAction.play())
-//            
+           
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
                 //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
