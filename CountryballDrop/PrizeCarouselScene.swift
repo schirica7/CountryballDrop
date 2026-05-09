@@ -95,9 +95,10 @@ class PrizeCarouselScene: SKScene {
         for i in 0..<count {
             let name = i >= count - 12 ? prize : pool.randomElement()!
             let w = weights[i] * scale
-            actions.append(SKAction.run { [weak self, weak slot] in
-                slot?.texture = SKTexture(imageNamed: name)
-                if self?.playSoundEffects == true, i % 4 == 0 {
+            // Capture `i` and `name` by value so deferred `SKAction.run` blocks don’t all see the loop’s final index.
+            actions.append(SKAction.run { [weak self, weak slot, step = i, textureName = name] in
+                slot?.texture = SKTexture(imageNamed: textureName)
+                if self?.playSoundEffects == true, step % 4 == 0 {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 }
             })

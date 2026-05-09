@@ -75,7 +75,15 @@ final class CountryballCollectionViewController: UICollectionViewController {
         guard UnlockedCountryballsStore.isUnlocked(id) else { return }
         guard let fact = CountryballFacts.info(for: id) else { return }
         let detail = CountryballFactDetailViewController(fact: fact)
-        navigationController?.pushViewController(detail, animated: true)
+        let sheetNav = UINavigationController(rootViewController: detail)
+        sheetNav.modalPresentationStyle = .pageSheet
+        if #available(iOS 15.0, *) {
+            if let sheet = sheetNav.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+            }
+        }
+        present(sheetNav, animated: true)
     }
 }
 

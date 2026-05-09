@@ -36,6 +36,9 @@ class WelcomeScene: SKScene {
         }
     }
     var playSoundEffects = true
+
+    /// Bounds of the Collection control in scene coordinates (parent `SKNode` is not hit-tested; shape hit areas can be inconsistent).
+    private var collectionButtonHitFrame = CGRect.null
    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
@@ -89,6 +92,9 @@ class WelcomeScene: SKScene {
         collectionLabel.name = "Collection"
         collectionContainer.addChild(collectionLabel)
         addChild(collectionContainer)
+
+        let c = collectionContainer.position
+        collectionButtonHitFrame = CGRect(x: c.x - btnW / 2, y: c.y - btnH / 2, width: btnW, height: btnH)
 
         
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
@@ -151,7 +157,9 @@ class WelcomeScene: SKScene {
                 return
             }
 
-            if objects.contains(where: { $0.name == "Collection" }) {
+            let hitCollectionNode = objects.contains(where: { $0.name == "Collection" })
+            let hitCollectionRect = collectionButtonHitFrame.contains(location)
+            if hitCollectionNode || hitCollectionRect {
                 (view?.window?.rootViewController as? GameViewController)?.presentCountryballCollection()
                 return
             }

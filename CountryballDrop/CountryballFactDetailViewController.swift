@@ -26,6 +26,14 @@ final class CountryballFactDetailViewController: UIViewController {
         view.backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
         title = fact.displayTitle
 
+        if let nav = navigationController, nav.presentingViewController != nil, nav.viewControllers.first === self {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .done,
+                target: self,
+                action: #selector(doneTapped)
+            )
+        }
+
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.alwaysBounceVertical = true
         view.addSubview(scrollView)
@@ -60,6 +68,10 @@ final class CountryballFactDetailViewController: UIViewController {
             stack.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -24),
             stack.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -40)
         ])
+    }
+
+    @objc private func doneTapped() {
+        dismiss(animated: true)
     }
 
     private func block(title: String, body: String) -> UIView {

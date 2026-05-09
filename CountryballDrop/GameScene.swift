@@ -132,15 +132,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             soundEffects.autoplayLooped = false
             soundEffects.run(SKAction.changeVolume(to: Float(0.70), duration: 0))
             addChild(soundEffects)
-            
-            if mutedSoundEffects {
-                muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
-                playSoundEffects = false
-            } else {
-                muteSoundEffectsButton.texture = SKTexture(imageNamed: "UnmuteButton")
-                playSoundEffects = true
-            }
         }
+        // Other scenes pass `playSoundEffects` only; keep the mute flag aligned so we don’t force SFX on.
+        mutedSoundEffects = !playSoundEffects
+        muteSoundEffectsButton.texture = SKTexture(imageNamed: mutedSoundEffects ? "MuteButton" : "UnmuteButton")
         
         // Country Names
         nameButton = SKSpriteNode(texture: SKTexture(imageNamed: "names"))
@@ -704,13 +699,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic.autoplayLooped = true
             addChild(backgroundMusic)
             backgroundMusic.run(SKAction.play())
-           
+
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to: 0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to: 0.42, duration: 0))
             }
         }
     }
