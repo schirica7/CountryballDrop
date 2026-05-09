@@ -36,6 +36,9 @@ class WelcomeScene: SKScene {
         }
     }
     var playSoundEffects = true
+
+    /// Bounds of the Collection control in scene coordinates (parent `SKNode` is not hit-tested; shape hit areas can be inconsistent).
+    private var collectionButtonHitFrame = CGRect.null
    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 158/255, green: 217/255, blue: 218/255, alpha: 1)
@@ -66,6 +69,32 @@ class WelcomeScene: SKScene {
         } else {
             nameButton.texture = SKTexture(imageNamed: "noNames")
         }
+
+        let collectionContainer = SKNode()
+        collectionContainer.zPosition = 2
+        collectionContainer.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.22)
+        let btnW = min(self.size.width * 0.58, 280)
+        let btnH: CGFloat = 50
+        let collectionFrame = SKShapeNode(rectOf: CGSize(width: btnW, height: btnH), cornerRadius: 14)
+        collectionFrame.strokeColor = .red
+        collectionFrame.lineWidth = 4
+        collectionFrame.fillColor = SKColor.white.withAlphaComponent(0.22)
+        // Drawable children participate in `nodes(at:)`; parent SKNode does not.
+        collectionFrame.name = "Collection"
+        collectionContainer.addChild(collectionFrame)
+        let collectionLabel = SKLabelNode(fontNamed: "American Typewriter")
+        collectionLabel.text = "Collection"
+        collectionLabel.fontSize = 22
+        collectionLabel.fontColor = UIColor.darkGray
+        collectionLabel.verticalAlignmentMode = .center
+        collectionLabel.horizontalAlignmentMode = .center
+        collectionLabel.zPosition = 1
+        collectionLabel.name = "Collection"
+        collectionContainer.addChild(collectionLabel)
+        addChild(collectionContainer)
+
+        let c = collectionContainer.position
+        collectionButtonHitFrame = CGRect(x: c.x - btnW / 2, y: c.y - btnH / 2, width: btnW, height: btnH)
 
         
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
@@ -125,6 +154,13 @@ class WelcomeScene: SKScene {
             
             if objects.contains (nameButton) {
                 showNames = !showNames
+                return
+            }
+
+            let hitCollectionNode = objects.contains(where: { $0.name == "Collection" })
+            let hitCollectionRect = collectionButtonHitFrame.contains(location)
+            if hitCollectionNode || hitCollectionRect {
+                (view?.window?.rootViewController as? GameViewController)?.presentCountryballCollection()
                 return
             }
         }

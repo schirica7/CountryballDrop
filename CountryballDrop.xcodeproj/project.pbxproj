@@ -29,6 +29,11 @@
 		CA43227329E9CAC600B178E1 /* WelcomeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = CA43227229E9CAC600B178E1 /* WelcomeScene.sks */; };
 		CA43227729E9CB4600B178E1 /* WelcomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA43227629E9CB4600B178E1 /* WelcomeScene.swift */; };
 		CA9EE82929E876CA00F91B89 /* kazooMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */; };
+		C9BD210129EA000100009011 /* UnlockedCountryballsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BD200129EA000100009001 /* UnlockedCountryballsStore.swift */; };
+		C9BD210229EA000100009021 /* PrizeCarouselScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BD200229EA000100009002 /* PrizeCarouselScene.swift */; };
+		C9BD210329EA000100009031 /* CountryballCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BD200329EA000100009003 /* CountryballCollectionViewController.swift */; };
+		C9BD320129EA00010001A011 /* CountryballFacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BD310129EA00010001A001 /* CountryballFacts.swift */; };
+		C9BD320229EA00010001A021 /* CountryballFactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BD310229EA00010001A002 /* CountryballFactDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +63,11 @@
 		CA43227229E9CAC600B178E1 /* WelcomeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WelcomeScene.sks; sourceTree = "<group>"; };
 		CA43227629E9CB4600B178E1 /* WelcomeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScene.swift; sourceTree = "<group>"; };
 		CA9EE82829E876CA00F91B89 /* kazooMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kazooMusic.mp3; sourceTree = "<group>"; };
+		C9BD200129EA000100009001 /* UnlockedCountryballsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockedCountryballsStore.swift; sourceTree = "<group>"; };
+		C9BD200229EA000100009002 /* PrizeCarouselScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeCarouselScene.swift; sourceTree = "<group>"; };
+		C9BD200329EA000100009003 /* CountryballCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryballCollectionViewController.swift; sourceTree = "<group>"; };
+		C9BD310129EA00010001A001 /* CountryballFacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryballFacts.swift; sourceTree = "<group>"; };
+		C9BD310229EA00010001A002 /* CountryballFactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryballFactDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +109,11 @@
 				4BC946CC29F9C6420099B55B /* LogoScene.swift */,
 				CA43227229E9CAC600B178E1 /* WelcomeScene.sks */,
 				CA43227629E9CB4600B178E1 /* WelcomeScene.swift */,
+				C9BD200129EA000100009001 /* UnlockedCountryballsStore.swift */,
+				C9BD200229EA000100009002 /* PrizeCarouselScene.swift */,
+				C9BD200329EA000100009003 /* CountryballCollectionViewController.swift */,
+				C9BD310129EA00010001A001 /* CountryballFacts.swift */,
+				C9BD310229EA00010001A002 /* CountryballFactDetailViewController.swift */,
 				1497EDD229C0F01F008F78DC /* GameScene.sks */,
 				1497EDD629C0F01F008F78DC /* GameScene.swift */,
 				147B0A3729E7261B00C62ECF /* EndScene.sks */,
@@ -269,6 +284,11 @@
 				CA43227729E9CB4600B178E1 /* WelcomeScene.swift in Sources */,
 				149089C229CE0C8300D64012 /* Countryball.swift in Sources */,
 				147B0A3629E7260700C62ECF /* EndScene.swift in Sources */,
+				C9BD210129EA000100009011 /* UnlockedCountryballsStore.swift in Sources */,
+				C9BD210229EA000100009021 /* PrizeCarouselScene.swift in Sources */,
+				C9BD210329EA000100009031 /* CountryballCollectionViewController.swift in Sources */,
+				C9BD320129EA00010001A011 /* CountryballFacts.swift in Sources */,
+				C9BD320229EA00010001A021 /* CountryballFactDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -68,4 +68,12 @@ class GameViewController: UIViewController {
         super.viewDidLayoutSubviews()
         banner.frame = CGRect(x: view.frame.size.width * 0.1, y: view.frame.size.height * 0.9175, width: view.frame.size.width * 0.8, height: view.frame.size.height * 0.055)
     }
+
+    func presentCountryballCollection() {
+        let collection = CountryballCollectionViewController()
+        let nav = UINavigationController(rootViewController: collection)
+        nav.modalPresentationStyle = .fullScreen
+        nav.navigationBar.prefersLargeTitles = true
+        present(nav, animated: true)
+    }
 }

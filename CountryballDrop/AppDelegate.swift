@@ -5,6 +5,7 @@
 //  Created by Sneezy on 3/14/23.
 //
 
+import AVFoundation
 import GoogleMobileAds
 import UIKit
 
@@ -13,10 +14,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        configureAudioSessionForMixingWithOtherApps()
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         return true
+    }
+
+    /// Keeps Spotify, Podcasts, etc. playing instead of pausing them when our game starts its own audio.
+    private func configureAudioSessionForMixingWithOtherApps() {
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
+            try session.setActive(true)
+        } catch {
+            // Best-effort; SpriteKit will fall back to system defaults.
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

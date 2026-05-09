@@ -132,15 +132,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             soundEffects.autoplayLooped = false
             soundEffects.run(SKAction.changeVolume(to: Float(0.70), duration: 0))
             addChild(soundEffects)
-            
-            if mutedSoundEffects {
-                muteSoundEffectsButton.texture = SKTexture(imageNamed: "MuteButton")
-                playSoundEffects = false
-            } else {
-                muteSoundEffectsButton.texture = SKTexture(imageNamed: "UnmuteButton")
-                playSoundEffects = true
-            }
         }
+        // Other scenes pass `playSoundEffects` only; keep the mute flag aligned so we don’t force SFX on.
+        mutedSoundEffects = !playSoundEffects
+        muteSoundEffectsButton.texture = SKTexture(imageNamed: mutedSoundEffects ? "MuteButton" : "UnmuteButton")
         
         // Country Names
         nameButton = SKSpriteNode(texture: SKTexture(imageNamed: "names"))
@@ -543,17 +538,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 newBall.dropped = true
                 
-                let scene = SKScene(fileNamed: "EndScene")! as! EndScene
-                
                 if let ballNode = newBall.ballNode {
-                    if newCBName == "world" && (ballNode.position.y + newBall.ballSize/2 < max.position.y - 2.5){
-                        scene.win = true
-                        scene.muted = muted
-                        scene.showNames = showNames
-                        scene.playSoundEffects = playSoundEffects
-                        let transition = SKTransition.crossFade(withDuration: 1)
-                        self.view?.presentScene(scene, transition: transition)
+                    if newCBName == "world" && (ballNode.position.y + newBall.ballSize/2 < max.position.y - 2.5) {
+                        let mutedNow = muted
+                        let showNow = showNames
+                        let sfxNow = playSoundEffects
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                            guard let self = self, let view = self.view else { return }
+                            let carousel = PrizeCarouselScene(size: view.bounds.size)
+                            carousel.scaleMode = .resizeFill
+                            carousel.muted = mutedNow
+                            carousel.showNames = showNow
+                            carousel.playSoundEffects = sfxNow
+                            let transition = SKTransition.crossFade(withDuration: 0.6)
+                            view.presentScene(carousel, transition: transition)
+                        }
                     } else if ballNode.position.y + newBall.ballSize/2 >= max.position.y - 2.5 {
+                        let scene = SKScene(fileNamed: "EndScene")! as! EndScene
                         scene.win = false
                         scene.muted = muted
                         scene.showNames = showNames
@@ -698,13 +699,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic.autoplayLooped = true
             addChild(backgroundMusic)
             backgroundMusic.run(SKAction.play())
-           
+
             if muted {
                 muteButton.texture = SKTexture(imageNamed: "muteMusic")
-                //backgroundMusic.run(SKAction.changeVolume(to:0.0, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to: 0.0, duration: 0))
             } else {
                 muteButton.texture = SKTexture(imageNamed: "unMuteMusic")
-                backgroundMusic.run(SKAction.changeVolume(to:0.42, duration: 0))
+                backgroundMusic.run(SKAction.changeVolume(to: 0.42, duration: 0))
             }
         }
     }
