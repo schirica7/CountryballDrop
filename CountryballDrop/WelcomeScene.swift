@@ -67,6 +67,29 @@ class WelcomeScene: SKScene {
             nameButton.texture = SKTexture(imageNamed: "noNames")
         }
 
+        let collectionContainer = SKNode()
+        collectionContainer.zPosition = 2
+        collectionContainer.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.22)
+        let btnW = min(self.size.width * 0.58, 280)
+        let btnH: CGFloat = 50
+        let collectionFrame = SKShapeNode(rectOf: CGSize(width: btnW, height: btnH), cornerRadius: 14)
+        collectionFrame.strokeColor = .red
+        collectionFrame.lineWidth = 4
+        collectionFrame.fillColor = SKColor.white.withAlphaComponent(0.22)
+        // Drawable children participate in `nodes(at:)`; parent SKNode does not.
+        collectionFrame.name = "Collection"
+        collectionContainer.addChild(collectionFrame)
+        let collectionLabel = SKLabelNode(fontNamed: "American Typewriter")
+        collectionLabel.text = "Collection"
+        collectionLabel.fontSize = 22
+        collectionLabel.fontColor = UIColor.darkGray
+        collectionLabel.verticalAlignmentMode = .center
+        collectionLabel.horizontalAlignmentMode = .center
+        collectionLabel.zPosition = 1
+        collectionLabel.name = "Collection"
+        collectionContainer.addChild(collectionLabel)
+        addChild(collectionContainer)
+
         
         if let musicLocation = Bundle.main.url(forResource: "menu sound", withExtension: ".mp3") {
             backgroundMusic = SKAudioNode(url: musicLocation)
@@ -125,6 +148,11 @@ class WelcomeScene: SKScene {
             
             if objects.contains (nameButton) {
                 showNames = !showNames
+                return
+            }
+
+            if objects.contains(where: { $0.name == "Collection" }) {
+                (view?.window?.rootViewController as? GameViewController)?.presentCountryballCollection()
                 return
             }
         }
